@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "378902430223",
+    "project_id": "bookdrop-5687b",
+    "storage_bucket": "bookdrop-5687b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378902430223:android:20a0e36fcb6c6e316e197a",
+        "android_client_info": {
+          "package_name": "root.radium.bookdrop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378902430223-n40tjp65f3ubu5qieba2b4r7gm1hal2q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "root.radium.bookdrop",
+            "certificate_hash": "5c9eab7aa15ae0ccca6863a5bf05cfa87967c040"
+          }
+        },
+        {
+          "client_id": "378902430223-vr9nu5p0u8jsho51l2jnd9efh7ba8b7s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCosUrKxovX5kWvIm-hEwciRwqko5YQGD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378902430223-vr9nu5p0u8jsho51l2jnd9efh7ba8b7s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
