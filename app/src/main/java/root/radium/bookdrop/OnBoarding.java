@@ -1,17 +1,15 @@
 package root.radium.bookdrop;
 
-import android.content.res.ColorStateList;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 public class OnBoarding extends AppCompatActivity {
@@ -38,6 +36,13 @@ public class OnBoarding extends AppCompatActivity {
         mViwePager.setAdapter(sliderAdapter);
         addDots(0);
         mViwePager.addOnPageChangeListener(changeListener);
+
+        findViewById(R.id.next_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OnBoarding.this, LoginActivity.class));
+            }
+        });
 
     }
 
