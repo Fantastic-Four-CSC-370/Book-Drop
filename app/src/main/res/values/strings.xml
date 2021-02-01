@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Book Drop</string>
     <string name="by">By Fantastic Four</string>
+    <string name="first_slider_titel">WELCOME TO</string>
+    <string name="first_slider_dis">BOOK DROP</string>
+    <string name="second_slider_titel">FIND YOUR NEXT READ</string>
+    <string name="second_slider_dis">Find your essential book and information about there availability from the app</string>
+    <string name="third_slider_titel">ORGANIZE YOUR LIBRARY</string>
+    <string name="third_slider_dis">Organize all the books of the library and keep track of them using this same app</string>
 </resources>
