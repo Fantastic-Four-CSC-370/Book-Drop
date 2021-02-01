@@ -1,19 +1,24 @@
 package root.radium.bookdrop;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
 
 public class OnBoarding extends AppCompatActivity {
 
     //variables declare
     ViewPager mViwePager;
     LinearLayout mDots;
-
     SliderAdapter sliderAdapter;
     TextView[] dots;
     @Override
@@ -26,17 +31,51 @@ public class OnBoarding extends AppCompatActivity {
         mViwePager = findViewById(R.id.slider_part);
         mDots = findViewById(R.id.dots);
 
+
         //calling adapter
         sliderAdapter = new SliderAdapter(this);
 
         mViwePager.setAdapter(sliderAdapter);
+        addDots(0);
+        mViwePager.addOnPageChangeListener(changeListener);
+
     }
 
-//    private void addDots(){
-//
-//        dots = new TextView[3];
-//        for(int i=0;i<dots.length;i++){
-//
-//        }
-//    }
+    private void addDots(int position){
+
+        dots = new TextView[3];
+        mDots.removeAllViews();
+        for(int i=0;i<dots.length;i++){
+            dots[i] = new TextView(this);
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(35);
+
+            mDots.addView(dots[i]);
+        }
+
+        if (dots.length>0){
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                dots[position].setTextColor(getColor(R.color.primary));
+            }else{
+                dots[position].setTextColor(getResources().getColor(R.color.primary));
+            }
+        }
+    }
+
+    ViewPager.OnPageChangeListener changeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            addDots(position);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
 }

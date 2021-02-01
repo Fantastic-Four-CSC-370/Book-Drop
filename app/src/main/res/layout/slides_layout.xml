@@ -16,7 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/slider_img"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="40dp">
 
         <TextView
             android:id="@+id/slider_heading"
@@ -27,7 +28,7 @@
             android:text="WELCOME TO BOOK DROP"
             android:layout_centerHorizontal="true"
             android:textColor="@color/primary"
-            android:textSize="40sp" />
+            android:textSize="36sp" />
 
         <TextView
             android:id="@+id/slider_dis"

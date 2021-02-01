@@ -4,43 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OnBoarding"
-    android:background="@color/primary_light">
+    android:background="@color/primary_light"
+    tools:context=".OnBoarding">
 
     <ImageView
         android:id="@+id/book_drop_logo"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:src="@drawable/logo"
-        android:layout_centerHorizontal="true"/>
+        android:src="@drawable/logo" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slider_part"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
-
-        <Button
-            android:id="@+id/start_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/accent"
-            android:text="Get Started" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:id="@+id/dots"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:paddingBottom="20dp"
-            android:orientation="horizontal" />
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp" />
 
 
         <Button
@@ -50,9 +44,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-
+            android:fontFamily="@font/agencyb"
             android:text="Next"
-            android:textColor="@color/primary_text" />
+            android:textColor="@color/primary"
+            android:textSize="20dp"
+            app:rippleColor="@color/primary" />
 
     </RelativeLayout>
 </RelativeLayout>

@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SplashActivity extends AppCompatActivity {
     //Variable
     //Splash Screen timer
-    private static int splashTime = 3000;
+    private static int splashTime = 800;
 
     //UI
     ImageView mBookImg, mLogoIcon, mDropImg;
