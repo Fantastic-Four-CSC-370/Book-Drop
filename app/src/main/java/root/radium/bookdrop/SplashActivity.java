@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SplashActivity extends AppCompatActivity {
     //Variable
     //Splash Screen timer
-    private static int splashTime = 3000;
+    private static final int splashTime = 3000;
 
     //UI
     ImageView mBookImg, mLogoIcon, mDropImg;
@@ -27,7 +27,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
         //Decliner UI
@@ -37,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
         mGroupName = findViewById(R.id.group_name);
 
         //Decliner Animation
-        Anim = AnimationUtils.loadAnimation(this,R.anim.intro_anim);
+        Anim = AnimationUtils.loadAnimation(this, R.anim.intro_anim);
 
         //Set Animation to Element
         mBookImg.setAnimation(Anim);
