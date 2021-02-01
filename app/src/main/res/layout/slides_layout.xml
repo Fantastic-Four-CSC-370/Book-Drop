@@ -1,44 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true">
     <ImageView
         android:id="@+id/slider_img"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="300dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/welcome_screen1" />
+        android:src="@drawable/welcome_screen1" />
 
-    <TextView
-        android:id="@+id/skider_heading"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/agencyb"
-        android:text="WELCOME TO"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/slider_img"
-        android:textColor="@color/black"/>
+        android:layout_below="@id/slider_img"
+        android:layout_centerHorizontal="true">
 
-    <TextView
-        android:id="@+id/text_dis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="179dp"
-        android:layout_marginEnd="175dp"
-        android:fontFamily="@font/agencyb"
-        android:gravity="center"
-        android:text="BOOK DROP"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/primary"
-        app:layout_constraintTop_toBottomOf="@+id/skider_heading" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/slider_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/agencyb"
+            android:text="WELCOME TO BOOK DROP"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/primary"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/slider_dis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/slider_heading"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/agencyb"
+            android:gravity="center"
+            android:text="A proper Library managment system"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </RelativeLayout>
+</RelativeLayout>
+
+
+</RelativeLayout>
