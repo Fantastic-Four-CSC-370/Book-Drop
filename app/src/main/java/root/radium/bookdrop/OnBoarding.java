@@ -32,11 +32,11 @@ public class OnBoarding extends AppCompatActivity {
         mViwePager.setAdapter(sliderAdapter);
     }
 
-    private void addDots(){
-
-        dots = new TextView[3];
-        for(int i=0;i<dots.length;i++){
-            
-        }
-    }
+//    private void addDots(){
+//
+//        dots = new TextView[3];
+//        for(int i=0;i<dots.length;i++){
+//
+//        }
+//    }
 }
