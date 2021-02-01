@@ -7,25 +7,41 @@
     android:background="@color/primary_light"
     tools:context=".OnBoarding">
 
-    <ImageView
-        android:id="@+id/book_drop_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/logo" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slider_part"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
+    <Button
+        android:id="@+id/skip_btn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/agencyb"
+        android:text="SKIP"
+        android:textColor="@color/primary"
+        android:textSize="20dp"
+        android:onClick="skip"
+        app:rippleColor="@color/primary" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/start_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary"
+            android:text="Get Started"
+            android:layout_marginHorizontal="40dp"
+            android:visibility="invisible"
+            android:onClick="getStarted"/>
 
         <LinearLayout
             android:id="@+id/dots"
@@ -36,7 +52,6 @@
             android:orientation="horizontal"
             android:paddingBottom="20dp" />
 
-
         <Button
             android:id="@+id/next_btn"
             style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -45,9 +60,11 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/agencyb"
-            android:text="Next"
+            android:text="NEXT"
             android:textColor="@color/primary"
             android:textSize="20dp"
+            android:onClick="next"
+            android:layout_marginEnd="10dp"
             app:rippleColor="@color/primary" />
 
     </RelativeLayout>

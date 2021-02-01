@@ -1,6 +1,7 @@
 package root.radium.bookdrop;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -23,6 +24,9 @@ public class SplashActivity extends AppCompatActivity {
 
     //Animation
     Animation Anim;
+
+    SharedPreferences onBordingScreen;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +53,24 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, OnBoarding.class);
-                startActivity(intent);
-                finish();
+                onBordingScreen = getSharedPreferences("onBordingScreen", MODE_PRIVATE);
+                boolean isFirstTime = onBordingScreen.getBoolean("firstTime", true);
+
+                if(isFirstTime){
+                    SharedPreferences.Editor editor = onBordingScreen.edit();
+                    editor.putBoolean("firstTime",false);
+                    editor.commit();
+
+                    Intent intent = new Intent(SplashActivity.this, OnBoarding.class);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+
             }
         },splashTime);
     }
