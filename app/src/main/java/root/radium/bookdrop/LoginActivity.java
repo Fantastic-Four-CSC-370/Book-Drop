@@ -35,11 +35,11 @@ public class LoginActivity extends AppCompatActivity {
         //Firebase Auth;
         auth = FirebaseAuth.getInstance();
 
-        lbtn = (Button) findViewById(R.id.lbtn);
-        mid = (EditText) findViewById(R.id.sid);
-        mpass = (EditText) findViewById(R.id.spass);
+        lbtn = findViewById(R.id.lbtn);
+        mid = findViewById(R.id.sid);
+        mpass = findViewById(R.id.spass);
 
-        mcreatenew = (TextView) findViewById(R.id.createnew);
+        mcreatenew = findViewById(R.id.createnew);
 
 
         lbtn.setOnClickListener(new View.OnClickListener() {
@@ -69,12 +69,16 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     finish();
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Try again",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this, "Login Failed!! \n Try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login Failed!! \n Try again",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
 
