@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText mid, mpass;
     TextView mcreatenew;
     private FirebaseAuth auth;
+    private RadioGroup degSelectorGroup;
+    private RadioButton degSelectorBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +45,28 @@ public class LoginActivity extends AppCompatActivity {
 
         mcreatenew = findViewById(R.id.createnew);
 
+        degSelectorGroup = findViewById(R.id.degSelector);
+
 
         lbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 String LoginEmail = mid.getText().toString().trim();
                 String LoginPass = mpass.getText().toString().trim();
+
+                if (degSelectorGroup.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getApplicationContext(), "Are you Librarian or teacher or student",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+//                Radio group here
+                    int selectedId = degSelectorGroup.getCheckedRadioButtonId();
+                    degSelectorBtn = (RadioButton) findViewById(selectedId);
+                    Toast.makeText(LoginActivity.this, degSelectorBtn.getText(), Toast.LENGTH_SHORT).show();
+//                Radio group here
+                }
 
                 if (TextUtils.isEmpty(LoginEmail)) {
                     Toast.makeText(LoginActivity.this, "Enter Email", Toast.LENGTH_SHORT).show();
@@ -70,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     finish();
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Try again",
+                                    Toast.makeText(LoginActivity.this, "Wrong Email id or Password",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -91,7 +111,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, signupForm.class));
             }
         });
-
 
     }
 }
