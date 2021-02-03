@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookDrop">
-        <activity android:name=".signupForm"></activity>
+        <activity android:name=".signupForm"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".OnBoarding" />
         <activity android:name=".SplashActivity">
