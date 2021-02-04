@@ -33,9 +33,9 @@ public class signupForm extends AppCompatActivity {
         setContentView(R.layout.activity_signup_form);
 
         auth = FirebaseAuth.getInstance();
-        mregEmail = (EditText) findViewById(R.id.regEmail);
-        mregPass = (EditText) findViewById(R.id.regPass);
-        mregbtn = (Button) findViewById(R.id.regbtn);
+        mregEmail = findViewById(R.id.regEmail);
+        mregPass = findViewById(R.id.regPass);
+        mregbtn = findViewById(R.id.regbtn);
         mLogin = findViewById(R.id.loginhere);
 
         mLogin.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,7 @@ public class signupForm extends AppCompatActivity {
 
 //TODO
 
-//                            startActivity(new Intent(signupForm.this, userProfile.class));
+                            startActivity(new Intent(signupForm.this, TakeInformationForm.class));
                             finish();
                         }
                     }

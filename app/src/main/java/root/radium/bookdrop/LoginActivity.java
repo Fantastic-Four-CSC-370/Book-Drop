@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
 //                Radio group here
                     int selectedId = degSelectorGroup.getCheckedRadioButtonId();
-                    degSelectorBtn = (RadioButton) findViewById(selectedId);
+                    degSelectorBtn = findViewById(selectedId);
                     Toast.makeText(LoginActivity.this, degSelectorBtn.getText(), Toast.LENGTH_SHORT).show();
 //                Radio group here
                 }
@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, signupForm.class));
             }
         });
+
 
     }
 }
