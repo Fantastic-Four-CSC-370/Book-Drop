@@ -13,24 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
-    <Button
-        android:id="@+id/skip_btn"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="10dp"
-        android:fontFamily="@font/agencyb"
-        android:text="SKIP"
-        android:textColor="@color/primary"
-        android:textSize="20dp"
-        android:onClick="skip"
-        app:rippleColor="@color/primary" />
+
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:layout_alignParentBottom="true">
 
         <Button
@@ -53,17 +41,17 @@
             android:paddingBottom="20dp" />
 
         <Button
-            android:id="@+id/next_btn"
+            android:id="@+id/skip_btn"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/agencyb"
-            android:text="NEXT"
+            android:text="SKIP"
             android:textColor="@color/primary"
             android:textSize="20dp"
-            android:onClick="next"
+            android:onClick="skip"
             android:layout_marginEnd="10dp"
             app:rippleColor="@color/primary" />
 

@@ -59,9 +59,9 @@ public class OnBoarding extends AppCompatActivity {
     }
 
     //work of next button
-    public void next(View view) {
-        mViwePager.setCurrentItem(currentPosition + 1);
-    }
+//    public void next(View view) {
+//        mViwePager.setCurrentItem(currentPosition + 1);
+//    }
 
     //work of get started button
     public void getStarted(View view){
@@ -108,14 +108,17 @@ public class OnBoarding extends AppCompatActivity {
             //visiblity of the get started button
             if (position == 0) {
                 mStart.setVisibility(View.INVISIBLE);
+                findViewById(R.id.skip_btn).setVisibility(View.VISIBLE);
 
             } else if (position == 1) {
                 mStart.setVisibility(View.INVISIBLE);
+                findViewById(R.id.skip_btn).setVisibility(View.VISIBLE);
 
             } else {
                 animation = AnimationUtils.loadAnimation(OnBoarding.this, R.anim.btn_anim);
                 mStart.setAnimation(animation);
                 mStart.setVisibility(View.VISIBLE);
+                findViewById(R.id.skip_btn).setVisibility(View.INVISIBLE);
 
             }
 

@@ -23,9 +23,9 @@
         android:layout_marginStart="21dp"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/agencyb"
-        android:text="Hey"
+        android:text="Welcome,"
         android:textColor="@color/primary"
-        android:textSize="40sp" />
+        android:textSize="35sp" />
 
     <TextView
         android:id="@+id/welcome_back_text"
@@ -33,11 +33,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/hey_text"
         android:layout_marginStart="21dp"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/agencyb"
-        android:text="Welcome Back!"
-        android:textColor="@color/primary_text"
-        android:textSize="30sp" />
+        android:fontFamily="@font/agencyr"
+        android:text="Sign in to continue!"
+        android:textColor="@color/secondary_text"
+        android:textSize="25sp" />
 
 
     <RelativeLayout
@@ -130,9 +129,8 @@
             android:fontFamily="@font/agencyb"
             android:paddingHorizontal="40dp"
             android:paddingVertical="10dp"
-            android:text="Log in"
+            android:text="Sign in"
             android:textSize="20sp"
-            android:textStyle="bold"
             app:strokeColor="@color/primary" />
 
         <RelativeLayout
@@ -146,16 +144,21 @@
                 android:id="@+id/donthave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don't have Account?" />
+                android:text="Don't have Account?"
+                android:fontFamily="@font/agencyr"
+                android:textSize="16sp"
+                android:textColor="@color/primary_text"/>
 
             <TextView
                 android:id="@+id/createnew"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/donthave"
-                android:paddingStart="8dp"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/primary"
+                android:fontFamily="@font/agencyb"
                 android:text="Create New"
-                android:textStyle="bold" />
+                android:textSize="16sp"/>
 
         </RelativeLayout>
 
