@@ -1,13 +1,17 @@
 package root.radium.bookdrop;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -16,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
@@ -45,6 +50,7 @@ public class TakeInformationForm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        storagePermission();
         setContentView(R.layout.activity_take_information_form);
 
         mSselectedPic = findViewById(R.id.selectedPic);
@@ -134,6 +140,41 @@ public class TakeInformationForm extends AppCompatActivity {
             Glide.with(this).load(imageUri).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(mSselectedPic);
         }
 
+    }
+
+    private void storagePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("Permission Grant", "Permission is granted");
+
+            } else {
+
+                Log.v("Permission denied", "Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("Permission Grant", "Permission is granted");
+
+        }
+        ReadstoragePermission();
+    }
+
+    private void ReadstoragePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("Permission Grant", "Permission is granted");
+
+            } else {
+
+                Log.v("Permission denied", "Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("Permission Grant", "Permission is granted");
+
+        }
     }
 
 
