@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,14 +32,14 @@ public class StudentDashboard extends AppCompatActivity {
     String uid = user.getUid();
     TextView Ssetname, Ssetid, SsetDepartment, SsetPhoneNo;
 
-    private static void ShowImg(String img) {
+    private void ShowImg(String img) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] imageBytes = baos.toByteArray();
-        Log.w("StudentDashboard", img);
         imageBytes = Base64.decode(img, Base64.DEFAULT);
         Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        SsetImg.setImageBitmap(decodedImage);
+//        SsetImg.setImageBitmap(decodedImage);
+        Glide.with(this).load(decodedImage).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(SsetImg);
 
     }
 
@@ -68,9 +70,7 @@ public class StudentDashboard extends AppCompatActivity {
 
                 ShowImg(img);
 
-
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 Log.w("StudentDashboard", "not working");
