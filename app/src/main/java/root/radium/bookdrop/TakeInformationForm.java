@@ -2,7 +2,9 @@ package root.radium.bookdrop;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,21 +14,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
@@ -58,7 +56,7 @@ public class TakeInformationForm extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("student");
         storageReference = FirebaseStorage.getInstance().getReference("student's pic");
 
-        findViewById(R.id.selectedPic).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.SelectPic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFileToSelectImg();
@@ -92,38 +90,33 @@ public class TakeInformationForm extends AppCompatActivity {
         String phoneNo = msPhoneNo.getText().toString().trim();
         String department = mSDepartment.getText().toString().trim();
 
-        StorageReference ref = storageReference.child(uid + "." + getExtension(imageUri));
+
         try {
-            Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-            byte[] data = baos.toByteArray();
-            UploadTask uploadTask = ref.putBytes(data);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    Toast.makeText(getApplicationContext(), "img uploaded not possible",
-                            Toast.LENGTH_SHORT).show();
 
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getApplicationContext(), "img uploaded successfully",
-                            Toast.LENGTH_SHORT).show();
-                    String imgurl = taskSnapshot.getStorage().getDownloadUrl().toString();
-                    student s = new student(name, phoneNo, id, department, imgurl);
+            String[] filePath = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(imageUri, filePath, null, null, null);
+            cursor.moveToFirst();
+            String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
 
-                    databaseReference.child(uid).setValue(s);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+            byte[] imageBytes = byteArrayOutputStream.toByteArray();
+//            encode start here
+//            String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+//            imageBytes = Base64.decode(imageString, Base64.DEFAULT);
+//            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+//            Glide.with(this).load(decodedImage).into(mSselectedPic);
 
-                }
-            });
+            student s = new student(name, phoneNo, id, department, imageBytes.toString().trim());
+            databaseReference.child(uid).setValue(s);
+            cursor.close();
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "" + e,
                     Toast.LENGTH_SHORT).show();
-
         }
-
     }
 
     public String getExtension(Uri imageUri) {
