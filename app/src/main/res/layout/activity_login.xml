@@ -144,21 +144,21 @@
                 android:id="@+id/donthave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don't have Account?"
                 android:fontFamily="@font/agencyr"
-                android:textSize="16sp"
-                android:textColor="@color/primary_text"/>
+                android:text="Don't have Account?"
+                android:textColor="@color/primary_text"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/createnew"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/donthave"
                 android:layout_marginStart="5dp"
-                android:textColor="@color/primary"
+                android:layout_toEndOf="@id/donthave"
                 android:fontFamily="@font/agencyb"
                 android:text="Create New"
-                android:textSize="16sp"/>
+                android:textColor="@color/primary"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 

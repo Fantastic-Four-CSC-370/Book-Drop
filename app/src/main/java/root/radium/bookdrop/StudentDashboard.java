@@ -1,0 +1,84 @@
+package root.radium.bookdrop;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.io.ByteArrayOutputStream;
+
+import root.radium.bookdrop.SupportingClass.student;
+
+public class StudentDashboard extends AppCompatActivity {
+
+    static ImageView SsetImg;
+    DatabaseReference databaseReference;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String uid = user.getUid();
+    TextView Ssetname, Ssetid, SsetDepartment, SsetPhoneNo;
+
+    private static void ShowImg(String img) {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] imageBytes = baos.toByteArray();
+        Log.w("StudentDashboard", img);
+        imageBytes = Base64.decode(img, Base64.DEFAULT);
+        Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        SsetImg.setImageBitmap(decodedImage);
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_student_dashboard);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("student");
+        SsetImg = findViewById(R.id.Ssetimg);
+        Ssetname = findViewById(R.id.setname);
+        Ssetid = findViewById(R.id.setid);
+        SsetDepartment = findViewById(R.id.setdepartmet);
+        SsetPhoneNo = findViewById(R.id.setMobilename);
+
+        databaseReference.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+//                Ssetname , Ssetid ,SsetDepartment ,SsetPhoneNo;
+
+                student user = dataSnapshot.getValue(student.class);
+                Ssetname.setText("Name : " + user.getName());
+                SsetPhoneNo.setText("Mobile no : " + user.getMobileNo());
+                SsetDepartment.setText("Semester : " + user.getDepartment());
+                Ssetid.setText("ID : " + user.getId());
+                String img = user.getImg();
+
+                ShowImg(img);
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("StudentDashboard", "not working");
+            }
+        });
+
+
+    }
+
+
+}

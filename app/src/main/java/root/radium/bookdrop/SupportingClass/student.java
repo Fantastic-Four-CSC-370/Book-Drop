@@ -1,7 +1,7 @@
 package root.radium.bookdrop.SupportingClass;
 
 public class student {
-    String name, mobileNo, id, department, img;
+    String name, mobileNo, id, department, img, role;
 
     public student() {
 

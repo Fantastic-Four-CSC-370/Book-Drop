@@ -31,15 +31,16 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/drop" />
     </RelativeLayout>
+
     <TextView
         android:id="@+id/group_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/by"
-        android:fontFamily="@font/agencyr"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/primary_text"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/agencyr"
+        android:text="@string/by"
+        android:textColor="@color/primary_text" />
 
 </RelativeLayout>

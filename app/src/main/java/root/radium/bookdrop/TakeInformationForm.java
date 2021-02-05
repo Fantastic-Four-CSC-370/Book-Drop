@@ -1,7 +1,6 @@
 package root.radium.bookdrop;
 
 import android.Manifest;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -11,9 +10,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -110,26 +109,26 @@ public class TakeInformationForm extends AppCompatActivity {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
             byte[] imageBytes = byteArrayOutputStream.toByteArray();
+            String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 //            encode start here
 //            String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 //            imageBytes = Base64.decode(imageString, Base64.DEFAULT);
 //            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
 //            Glide.with(this).load(decodedImage).into(mSselectedPic);
 
-            student s = new student(name, phoneNo, id, department, imageBytes.toString().trim());
+            student s = new student(name, phoneNo, id, department, imageString);
             databaseReference.child(uid).setValue(s);
+
+            startActivity(new Intent(TakeInformationForm.this, StudentDashboard.class));
             cursor.close();
+
+
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "" + e,
                     Toast.LENGTH_SHORT).show();
         }
     }
 
-    public String getExtension(Uri imageUri) {
-        ContentResolver c = getContentResolver();
-        MimeTypeMap m = MimeTypeMap.getSingleton();
-        return m.getExtensionFromMimeType(c.getType(imageUri));
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -151,7 +150,8 @@ public class TakeInformationForm extends AppCompatActivity {
             } else {
 
                 Log.v("Permission denied", "Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        1);
             }
         } else { //permission is automatically granted on sdk<23 upon installation
             Log.v("Permission Grant", "Permission is granted");
@@ -169,7 +169,8 @@ public class TakeInformationForm extends AppCompatActivity {
             } else {
 
                 Log.v("Permission denied", "Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1);
             }
         } else { //permission is automatically granted on sdk<23 upon installation
             Log.v("Permission Grant", "Permission is granted");
