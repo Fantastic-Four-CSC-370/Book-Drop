@@ -25,6 +25,8 @@ import androidx.core.app.ActivityCompat;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,13 +35,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
 import root.radium.bookdrop.SupportingClass.student;
 
 public class TakeInformationForm extends AppCompatActivity {
-
     private static final int IMAGE_REQUEST = 1;
     ImageView mSselectedPic;
     EditText mSName, mSid, msPhoneNo, mSDepartment;
@@ -62,8 +64,8 @@ public class TakeInformationForm extends AppCompatActivity {
         msPhoneNo = findViewById(R.id.stuPhone);
         mSDepartment = findViewById(R.id.stuDepart);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("student");
-        storageReference = FirebaseStorage.getInstance().getReference("student's pic");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Student");
+        storageReference = FirebaseStorage.getInstance().getReference("Student's picture");
 
         findViewById(R.id.SelectPic).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,13 +77,9 @@ public class TakeInformationForm extends AppCompatActivity {
         findViewById(R.id.sSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user != null) {
                     saveUserData();
-                } else {
 
-                }
             }
-
         });
 
     }
@@ -98,7 +96,7 @@ public class TakeInformationForm extends AppCompatActivity {
         String id = mSid.getText().toString().trim();
         String phoneNo = msPhoneNo.getText().toString().trim();
         String department = mSDepartment.getText().toString().trim();
-
+        StorageReference ref = storageReference.child(uid + ".s");
 
         try {
 
@@ -113,25 +111,38 @@ public class TakeInformationForm extends AppCompatActivity {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
             byte[] imageBytes = byteArrayOutputStream.toByteArray();
-            String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-//            encode start here
-//            String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-//            imageBytes = Base64.decode(imageString, Base64.DEFAULT);
-//            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-//            Glide.with(this).load(decodedImage).into(mSselectedPic);
 
-            student s = new student(name, phoneNo, id, department, imageString);
-            databaseReference.child(uid).setValue(s);
+            UploadTask uploadTask = ref.putBytes(imageBytes);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                    // ...
+                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while(! uriTask.isSuccessful());
+                        Uri downloadUrl = uriTask.getResult();
 
-
-            startActivity(new Intent(TakeInformationForm.this, StudentDashboard.class));
-            cursor.close();
-
+                    student s = new student(name, phoneNo, id, department, downloadUrl.toString());
+                    databaseReference.child(uid).setValue(s);
+                }
+            }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
+                    startActivity(new Intent(TakeInformationForm.this, StudentDashboard.class));
+                }
+            });
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "" + e,
                     Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
 
