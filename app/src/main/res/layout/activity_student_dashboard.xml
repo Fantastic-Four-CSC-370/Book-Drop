@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".StudentDashboard">
 
     <RelativeLayout
@@ -63,6 +64,19 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/SignOut"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/agencyb"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="10dp"
+            android:text="Sign out"
+            android:textSize="20sp"
+            app:strokeColor="@color/primary" />
 
     </LinearLayout>
 

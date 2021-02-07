@@ -42,6 +42,7 @@ public class signupForm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(signupForm.this, LoginActivity.class));
+                finish();
             }
         });
         mregbtn.setOnClickListener(new View.OnClickListener() {
