@@ -153,20 +153,24 @@ public class TakeInformationForm extends AppCompatActivity {
                         case "TEACHER":
                             startActivity(new Intent(TakeInformationForm.this,
                                     TeacherDashboard.class));
+                            finish();
 
                             break;
                         case "STUDENT":
                             startActivity(new Intent(TakeInformationForm.this,
                                     StudentDashboard.class));
+                            finish();
 
                             break;
                         case "LIBRARIAN":
                             startActivity(new Intent(TakeInformationForm.this,
                                     LibrarianDashboard.class));
+                            finish();
                             break;
                         default:
                             startActivity(new Intent(TakeInformationForm.this,
                                     NotFound.class));
+                            finish();
                     }
                 }
             });
