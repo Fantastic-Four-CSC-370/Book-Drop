@@ -82,44 +82,14 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <RadioGroup
-            android:id="@+id/degSelector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/password_textbox"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/radio_button_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="Librarian" />
-
-            <RadioButton
-                android:id="@+id/radio_button_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:checked="false"
-                android:text="Teacher" />
-
-            <RadioButton
-                android:id="@+id/radio_button_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:checked="false"
-                android:text="Student" />
-        </RadioGroup>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/regbtn"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/degSelector"
+            android:layout_below="@id/password_textbox"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"

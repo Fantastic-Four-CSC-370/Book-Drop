@@ -10,11 +10,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,18 +40,21 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
-import root.radium.bookdrop.SupportingClass.student;
+import root.radium.bookdrop.SupportingClass.Users;
 
 public class TakeInformationForm extends AppCompatActivity {
     private static final int IMAGE_REQUEST = 1;
     ImageView mSselectedPic;
     EditText mSName, mSid, msPhoneNo, mSDepartment;
     Uri imageUri;
+    private RadioGroup roleSelectorGroup;
+    private RadioButton roleSelectorBtn;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String uid = user.getUid();
     //    firebase
-    private DatabaseReference databaseReference;
-    private StorageReference storageReference;
+    DatabaseReference databaseReference;
+    StorageReference storageReference;
+    FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +67,11 @@ public class TakeInformationForm extends AppCompatActivity {
         mSid = findViewById(R.id.stuId);
         msPhoneNo = findViewById(R.id.stuPhone);
         mSDepartment = findViewById(R.id.stuDepart);
+        roleSelectorGroup = findViewById(R.id.RloeSelector);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Student");
-        storageReference = FirebaseStorage.getInstance().getReference("Student's picture");
+        databaseReference = FirebaseDatabase.getInstance().getReference("User");
+        storageReference = FirebaseStorage.getInstance().getReference("User's Picture");
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         findViewById(R.id.SelectPic).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +84,6 @@ public class TakeInformationForm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     saveUserData();
-
             }
         });
 
@@ -96,15 +101,18 @@ public class TakeInformationForm extends AppCompatActivity {
         String id = mSid.getText().toString().trim();
         String phoneNo = msPhoneNo.getText().toString().trim();
         String department = mSDepartment.getText().toString().trim();
-        StorageReference ref = storageReference.child(uid + ".s");
+        StorageReference ref = storageReference.child(uid + "");
 
+        int selectedId = roleSelectorGroup.getCheckedRadioButtonId();
+        roleSelectorBtn = findViewById(selectedId);
+        String role =  roleSelectorBtn.getText().toString().toUpperCase().trim();
         try {
 
             String[] filePath = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(imageUri, filePath, null, null, null);
+            Cursor cursor = getContentResolver().query(imageUri, filePath, null,
+                           null, null);
             cursor.moveToFirst();
             String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
-
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
@@ -127,13 +135,39 @@ public class TakeInformationForm extends AppCompatActivity {
                     while(! uriTask.isSuccessful());
                         Uri downloadUrl = uriTask.getResult();
 
-                    student s = new student(name, phoneNo, id, department, downloadUrl.toString());
-                    databaseReference.child(uid).setValue(s);
+                    Users s = new Users(name, phoneNo, id, department, downloadUrl.toString(),role);
+//realtime database
+//                    databaseReference.child(uid).setValue(s);
+                    firebaseFirestore.collection("User").document(uid).set(s).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(TakeInformationForm.this, "firestore ok", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
-                    startActivity(new Intent(TakeInformationForm.this, StudentDashboard.class));
+                    switch(role){
+
+                        case "TEACHER":
+                            startActivity(new Intent(TakeInformationForm.this,
+                                    TeacherDashboard.class));
+
+                            break;
+                        case "STUDENT":
+                            startActivity(new Intent(TakeInformationForm.this,
+                                    StudentDashboard.class));
+
+                            break;
+                        case "LIBRARIAN":
+                            startActivity(new Intent(TakeInformationForm.this,
+                                    LibrarianDashboard.class));
+                            break;
+                        default:
+                            startActivity(new Intent(TakeInformationForm.this,
+                                    NotFound.class));
+                    }
                 }
             });
 
@@ -141,7 +175,6 @@ public class TakeInformationForm extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "" + e,
                     Toast.LENGTH_SHORT).show();
         }
-
 
     }
 
@@ -193,6 +226,5 @@ public class TakeInformationForm extends AppCompatActivity {
 
         }
     }
-
 
 }

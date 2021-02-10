@@ -104,6 +104,44 @@
                 android:inputType="phone" />
 
         </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:textColor="@color/primary_text"
+            android:layout_margin="5dp"
+            android:textSize="17dp"
+            android:text="I am a "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <RadioGroup
+            android:id="@+id/RloeSelector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/password_textbox"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_button_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Librarian" />
+
+            <RadioButton
+                android:id="@+id/radio_button_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:checked="false"
+                android:text="Teacher" />
+
+            <RadioButton
+                android:id="@+id/radio_button_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:checked="false"
+                android:text="Student" />
+        </RadioGroup>
 
 
         <com.google.android.material.button.MaterialButton

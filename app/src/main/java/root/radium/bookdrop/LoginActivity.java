@@ -17,10 +17,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import root.radium.bookdrop.SupportingClass.Users;
 
 public class LoginActivity extends AppCompatActivity {
     final String TAG = "loginForm";
@@ -31,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
     private RadioGroup degSelectorGroup;
     private RadioButton degSelectorBtn;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -39,14 +47,11 @@ public class LoginActivity extends AppCompatActivity {
 
         //Firebase Auth;
         auth = FirebaseAuth.getInstance();
-
         lbtn = findViewById(R.id.lbtn);
         mid = findViewById(R.id.sid);
         mpass = findViewById(R.id.spass);
-
         mcreatenew = findViewById(R.id.createnew);
 
-        degSelectorGroup = findViewById(R.id.degSelector);
 
 
         lbtn.setOnClickListener(new View.OnClickListener() {
@@ -56,18 +61,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 String LoginEmail = mid.getText().toString().trim();
                 String LoginPass = mpass.getText().toString().trim();
-
-                if (degSelectorGroup.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getApplicationContext(), "Are you Librarian or teacher or student",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
-//                Radio group here
-                    int selectedId = degSelectorGroup.getCheckedRadioButtonId();
-                    degSelectorBtn = findViewById(selectedId);
-                    Toast.makeText(LoginActivity.this, degSelectorBtn.getText(), Toast.LENGTH_SHORT).show();
-//                Radio group here
-                }
 
                 if (TextUtils.isEmpty(LoginEmail)) {
                     Toast.makeText(LoginActivity.this, "Enter Email", Toast.LENGTH_SHORT).show();
@@ -82,14 +75,53 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-
                 auth.signInWithEmailAndPassword(LoginEmail, LoginPass)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                String uid = user.getUid();
+                                FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                                DocumentReference documentReference = firebaseFirestore.collection("Student").document(uid);
                                 if (task.isSuccessful()) {
-                                    startActivity(new Intent(LoginActivity.this, StudentDashboard.class));
-                                    finish();
+
+
+                                    documentReference.get().addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+
+                                        }
+                                    }).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            Users s = documentSnapshot.toObject(Users.class);
+                                            Toast.makeText(LoginActivity.this, s.getRole(), Toast.LENGTH_SHORT).show();
+                                            switch(s.getRole().toUpperCase()){
+
+                                                case "TEACHER":
+                                                    startActivity(new Intent(LoginActivity.this, TeacherDashboard.class));
+
+                                                    break;
+                                                case "STUDENT":
+                                                    startActivity(new Intent(LoginActivity.this, StudentDashboard.class));
+
+                                                    break;
+                                                case "LIBRARIAN":
+                                                    startActivity(new Intent(LoginActivity.this, LibrarianDashboard.class));
+
+                                                    break;
+                                                default:
+
+                                            }
+                                        }
+                                    }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                        }
+                                    });
+
+
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Wrong Email id or Password",
                                             Toast.LENGTH_SHORT).show();
@@ -102,7 +134,6 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
         });
 
@@ -113,15 +144,6 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
-//        if (user!= null){
-//            startActivity(new Intent(LoginActivity.this, StudentDashboard.class));
-//        }
-//    }
 }

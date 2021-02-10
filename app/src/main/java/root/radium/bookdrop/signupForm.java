@@ -84,15 +84,13 @@ public class signupForm extends AppCompatActivity {
                             Toast.makeText(signupForm.this, "Authentication failed." + task.getException(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
-
-//TODO
-
-                            startActivity(new Intent(signupForm.this, TakeInformationForm.class));
-                            finish();
+                            Toast.makeText(signupForm.this, "Welcome to BookDrop",
+                                    Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(signupForm.this, TakeInformationForm.class));
+                        finish();
                         }
                     }
                 });
-
         Toast.makeText(getApplicationContext(), " Successfully Register", Toast.LENGTH_SHORT).show();
     }
 }

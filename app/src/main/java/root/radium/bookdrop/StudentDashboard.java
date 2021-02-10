@@ -1,32 +1,28 @@
 package root.radium.bookdrop;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
-
-import root.radium.bookdrop.SupportingClass.student;
+import root.radium.bookdrop.SupportingClass.Users;
 
 public class StudentDashboard extends AppCompatActivity {
 
@@ -35,6 +31,9 @@ public class StudentDashboard extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String uid = user.getUid();
     TextView Ssetname, Ssetid, SsetDepartment, SsetPhoneNo;
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    DocumentReference documentReference = firebaseFirestore.collection("User").document(uid);
 
 
     private void ShowImg(String img) {
@@ -46,29 +45,55 @@ public class StudentDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_dashboard);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Student");
+        databaseReference = FirebaseDatabase.getInstance().getReference("User");
         SsetImg = findViewById(R.id.Ssetimg);
         Ssetname = findViewById(R.id.setname);
         Ssetid = findViewById(R.id.setid);
         SsetDepartment = findViewById(R.id.setdepartmet);
         SsetPhoneNo = findViewById(R.id.setMobilename);
 
-        databaseReference.child(uid).addValueEventListener(new ValueEventListener() {
+//        databaseReference.child(uid).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                student user = dataSnapshot.getValue(student.class);
+//                Ssetname.setText("Name : " + user.getName());
+//                SsetPhoneNo.setText("Mobile no : " + user.getMobileNo());
+//                SsetDepartment.setText("Semester : " + user.getDepartment());
+//                Ssetid.setText("ID : " + user.getId());
+//                String img = user.getImg();
+//                ShowImg(img);
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                Log.w("StudentDashboard", "not working");
+//            }
+//        });
+
+        documentReference.get().addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                student user = dataSnapshot.getValue(student.class);
-                Ssetname.setText("Name : " + user.getName());
-                SsetPhoneNo.setText("Mobile no : " + user.getMobileNo());
-                SsetDepartment.setText("Semester : " + user.getDepartment());
-                Ssetid.setText("ID : " + user.getId());
-                String img = user.getImg();
-                ShowImg(img);
+            public void onFailure(@NonNull Exception e) {
+
             }
+        }).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w("StudentDashboard", "not working");
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Users s = documentSnapshot.toObject(Users.class);
+
+                Ssetname.setText("Name : " + s.getName());
+                SsetPhoneNo.setText("Mobile no : " + s.getMobileNo());
+                SsetDepartment.setText("Semester : " + s.getDepartment().toUpperCase());
+                Ssetid.setText("ID : " + s.getId());
+                String img = s.getImg();
+                ShowImg(img);
+
+            }
+        }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
             }
         });
+
 
         findViewById(R.id.SignOut).setOnClickListener(new View.OnClickListener() {
             @Override
