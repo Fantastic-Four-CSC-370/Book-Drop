@@ -64,6 +64,28 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/setRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ShowBooks"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/agencyb"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="10dp"
+            android:text="See all Book"
+            android:textSize="20sp"
+            app:strokeColor="@color/primary"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/SignOut"
             style="?attr/materialButtonOutlinedStyle"

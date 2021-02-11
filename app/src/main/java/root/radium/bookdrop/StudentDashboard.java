@@ -30,7 +30,7 @@ public class StudentDashboard extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String uid = user.getUid();
-    TextView Ssetname, Ssetid, SsetDepartment, SsetPhoneNo;
+    TextView Ssetname, Ssetid, SsetDepartment, SsetPhoneNo ,setRole;
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     DocumentReference documentReference = firebaseFirestore.collection("User").document(uid);
@@ -51,6 +51,7 @@ public class StudentDashboard extends AppCompatActivity {
         Ssetid = findViewById(R.id.setid);
         SsetDepartment = findViewById(R.id.setdepartmet);
         SsetPhoneNo = findViewById(R.id.setMobilename);
+        setRole = findViewById(R.id.setRole);
 
 //        databaseReference.child(uid).addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -85,6 +86,8 @@ public class StudentDashboard extends AppCompatActivity {
                 Ssetid.setText("ID : " + s.getId());
                 String img = s.getImg();
                 ShowImg(img);
+                setRole.setText("Role : " +s.getRole());
+
 
             }
         }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -100,6 +103,14 @@ public class StudentDashboard extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(StudentDashboard.this , LoginActivity.class));
+                finish();
+            }
+        });
+        findViewById(R.id.ShowBooks).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(StudentDashboard.this , BookSearch.class));
                 finish();
             }
         });

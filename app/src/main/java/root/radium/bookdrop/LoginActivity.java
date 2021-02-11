@@ -3,6 +3,7 @@ package root.radium.bookdrop;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -81,47 +82,9 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                 String uid = user.getUid();
-                                FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-                                DocumentReference documentReference = firebaseFirestore.collection("Student").document(uid);
+                                Log.e("Uid" , uid);
                                 if (task.isSuccessful()) {
-
-
-                                    documentReference.get().addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-
-                                        }
-                                    }).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            Users s = documentSnapshot.toObject(Users.class);
-                                            Toast.makeText(LoginActivity.this, s.getRole(), Toast.LENGTH_SHORT).show();
-                                            switch(s.getRole().toUpperCase()){
-
-                                                case "TEACHER":
-                                                    startActivity(new Intent(LoginActivity.this, TeacherDashboard.class));
-
-                                                    break;
-                                                case "STUDENT":
-                                                    startActivity(new Intent(LoginActivity.this, StudentDashboard.class));
-
-                                                    break;
-                                                case "LIBRARIAN":
-                                                    startActivity(new Intent(LoginActivity.this, LibrarianDashboard.class));
-
-                                                    break;
-                                                default:
-
-                                            }
-                                        }
-                                    }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
-                                        }
-                                    });
-
-
+                                    DriveUser(uid);
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Wrong Email id or Password",
                                             Toast.LENGTH_SHORT).show();
@@ -142,6 +105,49 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, signupForm.class));
                 finish();
+            }
+        });
+    }
+
+    private void DriveUser(String uid){
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = firebaseFirestore.collection(
+                "User").document(uid);
+
+        documentReference.get().addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                Users s = documentSnapshot.toObject(Users.class);
+
+                Toast.makeText(LoginActivity.this, s.getRole(), Toast.LENGTH_SHORT).show();
+                switch(s.getRole()){
+
+                    case "TEACHER":
+                        startActivity(new Intent(LoginActivity.this, TeacherDashboard.class));
+
+                        break;
+                    case "STUDENT":
+                        startActivity(new Intent(LoginActivity.this, StudentDashboard.class));
+
+                        break;
+                    case "LIBRARIAN":
+                        startActivity(new Intent(LoginActivity.this, LibrarianDashboard.class));
+
+                        break;
+                    default:
+
+                }
+            }
+        }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
             }
         });
     }
