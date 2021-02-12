@@ -56,8 +56,10 @@ public class BookSearch extends AppCompatActivity {
                             String SubTitle =volumeInfo.getString("subtitle");
                             bookSubTitle.setText("Book Subtitle :" +SubTitle);
                             JSONArray Authors = volumeInfo.getJSONArray("authors");
-                            for(int i = 0 ; i<Authors.length() ; i++ ) {
-                                Log.e("Authors ", Authors.getString(i) );
+                            if(Authors.length() == 1){
+                               Log.e("Author",Authors.getString(0)) ;
+                            }else {
+                                Log.e("Author", Authors.getString(0) + "|" +Authors.getString(1));
                             }
 
 
