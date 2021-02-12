@@ -38,7 +38,8 @@ public class BookSearch extends AppCompatActivity {
 
 
     private void getDataFromApi() {
-        String url = API_URL +"isbn:9783319255576" + API_KEY;
+       // String url = API_URL +"isbn:9783319255576" + API_KEY;
+        String url ="https://www.googleapis.com/books/v1/volumes?q=list&key=AIzaSyDtnPYZJxLuF-NI-VW_pUU_rdAXvBthWWc";
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null,
@@ -50,22 +51,72 @@ public class BookSearch extends AppCompatActivity {
                             JSONArray items = response.getJSONArray("items");
                             JSONObject item =items.getJSONObject(0);
 
-                            JSONObject volumeInfo = item.getJSONObject("volumeInfo");
+                            JSONObject volumeInfo = item.optJSONObject("volumeInfo");
+
                             String Title =volumeInfo.getString("title");
+                            Log.e("Response", Title.toString() );
                             bookTitle.setText("Book Title :" +Title);
-                            String SubTitle =volumeInfo.getString("subtitle");
-                            bookSubTitle.setText("Book Subtitle :" +SubTitle);
-                            JSONArray Authors = volumeInfo.getJSONArray("authors");
-                            if(Authors.length() == 1){
-                               Log.e("Author",Authors.getString(0)) ;
-                            }else {
-                                Log.e("Author", Authors.getString(0) + "|" +Authors.getString(1));
+
+                            String SubTitle =volumeInfo.optString("subtitle");
+                            if( SubTitle == ""){
+                                Log.e("SubTitle","notfound");
+                            }else{
+                                    Log.e("SubTitle",SubTitle) ;
                             }
 
+                            JSONArray Authors = volumeInfo.optJSONArray("authors");
+                            if( Authors == null){
+                                Log.e("Author","notfound");
+                            }else{
+                                if(Authors.length() == 1){
+                                    Log.e("Author",Authors.getString(0)) ;
+                                }else {
+                                    Log.e("Author", Authors.getString(0) + ", "
+                                            +Authors.getString(1));
+                                }
+                            }
 
-                            Log.e("Response", Title.toString() );
-                            Log.e("Response", SubTitle.toString() );
+                            String PublishDate = volumeInfo.optString("publishedDate").replace("",
+                                    "Not Found");
+                            Log.e("PublishDate", PublishDate);
 
+                            String BookDescription = volumeInfo.optString("description").replace("",
+                                    "Not Found");
+                            Log.e("BookDescription", BookDescription);
+
+                            JSONArray industryIdentifiers = volumeInfo.getJSONArray("industryIdentifiers");
+                            for (int i=0; i<industryIdentifiers.length(); i++)
+                            {
+                                JSONObject isbns  = industryIdentifiers.getJSONObject(i);
+                                String isbnType = isbns.getString("type");
+                                String isbn = isbns.getString("identifier");
+                                Log.e("ISBN", isbnType + ":" + isbn  );
+                            }
+
+                            int PageCount = volumeInfo.optInt("pageCount");
+                            if(PageCount == 0){
+                                Log.e("PageCount", "Undefine pages " );
+                            }else{
+                                Log.e("PageCount", PageCount +" pages " );
+                            }
+
+                            JSONObject imageLinks = volumeInfo.optJSONObject("imageLinks");
+                            if (imageLinks == null) {
+                                Log.e("imageLinks", "not Found");
+                            } else {
+                                String smallThumbnail = imageLinks.optString("smallThumbnail");
+                                if(smallThumbnail == ""){
+                                    Log.e("smallThumbnail","not Found" );
+                                }else{
+                                    Log.e("smallThumbnail", smallThumbnail );
+                                }
+                            }
+                            String PreviewLink = volumeInfo.optString("previewLink");
+                            if(PreviewLink == ""){
+                                Log.e("PreviewLink", "Undefine pages " );
+                            }else{
+                                Log.e("PreviewLink", PreviewLink );
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
