@@ -1,8 +1,8 @@
 package root.radium.bookdrop.SupportingClass;
 
 public class Book {
-    private String Title,Authors,PublishedDate,BookDescription,Categories,Thumbnail,Preview,Url;
-    private int pageCount;
+    private String Title,Authors,PublishedDate,BookDescription,BookSubTitle,Thumbnail,Preview,ISBN, pageCount;
+
     public Book(){
 
     }
@@ -39,12 +39,12 @@ public class Book {
         BookDescription = bookDescription;
     }
 
-    public String getCategories() {
-        return Categories;
+    public String getBookSubTitle() {
+        return BookSubTitle;
     }
 
-    public void setCategories(String categories) {
-        Categories = categories;
+    public void setBookSubTitle(String categories) {
+        BookSubTitle = categories;
     }
 
     public String getThumbnail() {
@@ -62,33 +62,34 @@ public class Book {
     public void setPreview(String preview) {
         Preview = preview;
     }
-
-    public String getUrl() {
-        return Url;
+    public String getISBN() {
+        return ISBN;
     }
 
-    public void setUrl(String url) {
-        Url = url;
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
     }
 
-    public int getPageCount() {
+    public String getPageCount() {
         return pageCount;
     }
 
-    public void setPageCount(int pageCount) {
+    public void setPageCount(String pageCount) {
         this.pageCount = pageCount;
     }
 
-    public Book(String Title, String Authors, String PublishedDate, String BookDescription, String Categories,
-                String Thumbnail, String Preview , int pageCount , String Url) {
+    public Book(String Title, String Authors, String PublishedDate, String BookDescription, String BookSubTitle,
+                String Thumbnail, String Preview , String pageCount , String ISBN) {
         this.Title = Title;
         this.Authors = Authors;
         this.PublishedDate = PublishedDate;
         this.BookDescription = BookDescription;
-        this.Categories = Categories;
+        this.BookSubTitle = BookSubTitle;
         this.Thumbnail = Thumbnail;
         this.Preview = Preview;
         this.pageCount = pageCount;
-        this.Url = Url;
+        this.ISBN = ISBN;
     }
+
+
 }

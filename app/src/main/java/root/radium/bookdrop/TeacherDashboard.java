@@ -62,7 +62,7 @@ public class TeacherDashboard extends AppCompatActivity {
                 TsetDepartment.setText("Semester : " + s.getDepartment().toUpperCase());
                 Tsetid.setText("ID : " + s.getId());
                 String img = s.getImg();
-                ShowImg(img);
+                Picasso.get().load(img).into(TsetImg);
 
             }
         }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -83,7 +83,5 @@ public class TeacherDashboard extends AppCompatActivity {
         });
 
     }
-    private void ShowImg(String img) {
-        Picasso.with(this).load(img).into(TsetImg);
-    }
+
 }

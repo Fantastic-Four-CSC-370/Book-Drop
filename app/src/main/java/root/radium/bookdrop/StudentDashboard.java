@@ -36,9 +36,9 @@ public class StudentDashboard extends AppCompatActivity {
     DocumentReference documentReference = firebaseFirestore.collection("User").document(uid);
 
 
-    private void ShowImg(String img) {
-       Picasso.with(this).load(img).into(SsetImg);
-    }
+//    private void ShowImg(String img) {
+//       Picasso.with(this).load(img).into(SsetImg);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class StudentDashboard extends AppCompatActivity {
                 SsetDepartment.setText("Semester : " + s.getDepartment().toUpperCase());
                 Ssetid.setText("ID : " + s.getId());
                 String img = s.getImg();
-                ShowImg(img);
+                Picasso.get().load(img).into(SsetImg);
                 setRole.setText("Role : " +s.getRole());
 
 

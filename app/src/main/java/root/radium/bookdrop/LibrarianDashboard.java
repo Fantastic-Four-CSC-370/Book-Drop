@@ -61,7 +61,7 @@ public class LibrarianDashboard extends AppCompatActivity {
                 LsetDepartment.setText("Semester : " + s.getDepartment().toUpperCase());
                 Lsetid.setText("ID : " + s.getId());
                 String img = s.getImg();
-                ShowImg(img);
+                Picasso.get().load(img).into(LsetImg);
 
             }
         }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -82,7 +82,5 @@ public class LibrarianDashboard extends AppCompatActivity {
         });
 
     }
-    private void ShowImg(String img) {
-        Picasso.with(this).load(img).into(LsetImg);
-    }
+
 }
