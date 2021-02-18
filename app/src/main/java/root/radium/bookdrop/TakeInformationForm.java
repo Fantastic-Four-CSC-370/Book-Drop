@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -59,7 +60,10 @@ public class TakeInformationForm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //storage access
         storagePermission();
+        //used for hide status bar
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_take_information_form);
 
         mSselectedPic = findViewById(R.id.selectedPic);
@@ -73,7 +77,7 @@ public class TakeInformationForm extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("User's Picture");
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        findViewById(R.id.SelectPic).setOnClickListener(new View.OnClickListener() {
+        mSselectedPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFileToSelectImg();

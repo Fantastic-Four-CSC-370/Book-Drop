@@ -38,7 +38,7 @@
 
             <TextView
                 android:id="@+id/title_text"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -50,14 +50,13 @@
 
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/selectedPic"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
                 android:layout_below="@id/title_text"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="24dp"
                 android:src="@drawable/avater"
-                app:civ_border_color="@color/primary"
-                app:civ_border_width="4dp" />
+                app:civ_border_color="@color/primary"/>
 
             <!--    <RelativeLayout-->
             <!--        android:id="@+id/picContainer"-->
@@ -79,22 +78,12 @@
 
             <!--    </RelativeLayout>-->
 
-            <Button
-                android:id="@+id/SelectPic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/selectedPic"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:text="Select your Picture" />
-
 
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/SelectPic"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="52dp"
                 android:paddingHorizontal="21dp"
                 android:orientation="vertical">
 
@@ -102,10 +91,11 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="16dp"
                     android:hint="Name"
                     app:boxBackgroundColor="@color/white"
-                    app:boxStrokeColor="@color/primary">
+                    app:boxStrokeColor="@color/primary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
 
@@ -119,10 +109,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="16dp"
                     android:hint="Student ID"
                     app:boxBackgroundColor="@color/white"
-                    app:boxStrokeColor="@color/primary">
+                    app:boxStrokeColor="@color/primary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/stuId"
@@ -135,10 +126,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="16dp"
                     android:hint="Department"
                     app:boxBackgroundColor="@color/white"
-                    app:boxStrokeColor="@color/primary">
+                    app:boxStrokeColor="@color/primary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/stuDepart"
@@ -152,10 +144,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="16dp"
                     android:hint="Mobile No"
                     app:boxBackgroundColor="@color/white"
-                    app:boxStrokeColor="@color/primary">
+                    app:boxStrokeColor="@color/primary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/stuPhone"
@@ -165,13 +158,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="I am a "
-                    android:textColor="@color/primary_text"
-                    android:textSize="17dp" />
 
                 <RadioGroup
                     android:id="@+id/RloeSelector"
@@ -186,23 +172,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
-                        android:text="Librarian" />
+                        android:text="Librarian"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/agencyr"/>
 
                     <RadioButton
                         android:id="@+id/radio_button_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="24dp"
                         android:checked="false"
-                        android:text="Teacher" />
+                        android:text="Teacher"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/agencyr"/>
 
                     <RadioButton
                         android:id="@+id/radio_button_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="24dp"
                         android:checked="false"
-                        android:text="Student" />
+                        android:text="Student"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/agencyr"/>
                 </RadioGroup>
 
 
@@ -212,12 +204,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="24dp"
                     android:paddingHorizontal="40dp"
                     android:paddingVertical="10dp"
                     android:text="submit"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="22sp"
+                    android:fontFamily="@font/agencyb"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/primary"/>
 
 
             </LinearLayout>
