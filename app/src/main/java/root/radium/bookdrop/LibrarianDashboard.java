@@ -38,6 +38,7 @@ public class LibrarianDashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_librarian_dashboard);
+        getSupportActionBar().hide();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
         LsetImg = findViewById(R.id.Lsetimg);

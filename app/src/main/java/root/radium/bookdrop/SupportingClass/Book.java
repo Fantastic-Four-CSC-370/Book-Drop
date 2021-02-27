@@ -1,6 +1,8 @@
 package root.radium.bookdrop.SupportingClass;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private String Title,Authors,PublishedDate,BookDescription,BookSubTitle,Thumbnail,Preview,ISBN, pageCount;
 
     public Book(){
@@ -43,8 +45,8 @@ public class Book {
         return BookSubTitle;
     }
 
-    public void setBookSubTitle(String categories) {
-        BookSubTitle = categories;
+    public void setBookSubTitle(String bookSubTitle) {
+        BookSubTitle =bookSubTitle;
     }
 
     public String getThumbnail() {
@@ -62,6 +64,7 @@ public class Book {
     public void setPreview(String preview) {
         Preview = preview;
     }
+
     public String getISBN() {
         return ISBN;
     }

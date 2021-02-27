@@ -39,6 +39,7 @@ public class TeacherDashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_dashboard);
+        getSupportActionBar().hide();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
         TsetImg = findViewById(R.id.Tsetimg);

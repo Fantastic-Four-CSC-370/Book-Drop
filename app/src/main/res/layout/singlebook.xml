@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="160dp"
+    android:id="@+id/container"
     >
     <androidx.cardview.widget.CardView
 
@@ -27,42 +28,43 @@
                 android:layout_height="150dp">
                 <TextView
                     android:id="@+id/Book_title"
-                    android:text="Title : Hello C"
-                    android:textSize="20sp"
+                    android:text="Title : "
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <TextView
 
-                    android:id="@+id/Book_Subtitle"
-                    android:text="Subtitle : Hello C"
-                    android:textSize="15sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/Book_Subtitle"-->
+<!--                    android:text="Subtitle : "-->
+<!--                    android:textSize="15sp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
                 <TextView
                     android:id="@+id/Book_Author"
-                    android:text="Author : Hello C"
-                    android:textSize="15sp"
+                    android:text="Author : "
+                    android:textStyle="italic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/Book_pages"
-                    android:text="pages : Hello C"
+                    android:text="pages : "
                     android:textSize="15sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/Book_PublishDate"
-                    android:text="PublishDate : Hello C"
+                    android:text="PublishDate : "
                     android:textSize="15sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/Book_ISBN"
-                    android:text="PublishDate : Hello C"
-                    android:textSize="15sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/Book_ISBN"-->
+<!--                    android:text="PublishDate : Hello C"-->
+<!--                    android:textSize="15sp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"/>-->
 
 
             </LinearLayout>

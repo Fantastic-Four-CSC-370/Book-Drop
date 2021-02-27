@@ -37,6 +37,7 @@ public class OnBoarding extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_on_boarding);
+        getSupportActionBar().hide();
 
         //assigning the view element in a variables
         mViwePager = findViewById(R.id.slider_part);

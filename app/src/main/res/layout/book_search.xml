@@ -12,18 +12,26 @@
         android:id="@+id/searchBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search">
+        app:endIconMode="custom"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/searchText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/btnsrc"
+        android:layout_below="@id/searchBook"
+        android:text="search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/BookRecView"
-        android:layout_below="@id/searchBook"
+        android:layout_below="@id/btnsrc"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

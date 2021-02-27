@@ -31,6 +31,7 @@ public class signupForm extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_form);
+        getSupportActionBar().hide();
 
         auth = FirebaseAuth.getInstance();
         mregEmail = findViewById(R.id.regEmail);

@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,24 +35,38 @@ public class BookSearch extends AppCompatActivity {
     private String API_KEY = "&key=AIzaSyDtnPYZJxLuF-NI-VW_pUU_rdAXvBthWWc";
     private String API_URL = "https://www.googleapis.com/books/v1/volumes?q=";
     public String Title ,SubTitle,Author,PublishDate, BookDescription,ISBNInfo,Page,smallThumbnail,PreviewLink;
-
+    EditText searchText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
         setContentView(R.layout.book_search);
+        searchText =findViewById(R.id.searchText);
         recyclerView =findViewById(R.id.BookRecView);
         books = new ArrayList<>();
-        getDataFromApi();
+
+        getDataFromApi("Software Engineering");
+
+        findViewById(R.id.btnsrc).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                books.clear();
+                String query =  searchText.getText().toString().trim();
+                getDataFromApi(query);
+
+            }
+        });
+
 
     }
 
 
-    private void getDataFromApi() {
+    private void getDataFromApi(String query) {
 
-       // String url = API_URL +"isbn:9783319255576" + API_KEY;
-        String url ="https://www.googleapis.com/books/v1/volumes?q=java&key=AIzaSyDtnPYZJxLuF-NI-VW_pUU_rdAXvBthWWc";
+        String url = API_URL + query + API_KEY;
+
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null,
@@ -65,96 +81,87 @@ public class BookSearch extends AppCompatActivity {
                                 JSONObject volumeInfo = item.optJSONObject("volumeInfo");
 
                                 Title =volumeInfo.getString("title");
-                                Log.e("Response", Title );
-
 
                                 if( volumeInfo.optString("subtitle") == ""){
                                     SubTitle ="Not Found";
-                                    Log.e("SubTitle", SubTitle);
+
                                 }else{
                                     SubTitle =volumeInfo.optString("subtitle");
-                                    Log.e("SubTitle",SubTitle) ;
                                 }
-
 
                                 if( volumeInfo.optJSONArray("authors") == null){
                                      Author = " Not Found";
-                                    Log.e("Author","notfound");
+
                                 }else{
                                     if(volumeInfo.optJSONArray("authors").length() == 1){
                                          Author =volumeInfo.optJSONArray("authors").getString(0);
-                                        Log.e("Author",Author) ;
+
                                     }else {
                                          Author =volumeInfo.optJSONArray("authors").getString(0) + ", "
                                                 +volumeInfo.optJSONArray("authors").getString(1);
-                                        Log.e("Author", Author);
+
                                     }
                                 }
 
                                 if( volumeInfo.optString("publishedDate") == ""){
                                      PublishDate ="Not Found";
-                                    Log.e("PublishDate", PublishDate);
+
                                 }else{
                                      PublishDate =volumeInfo.optString("publishedDate");
-                                    Log.e("PublishDate", PublishDate);
+
                                 }
 
                                 if(volumeInfo.optString("description") == ""){
                                     BookDescription = "Not Found";
-                                    Log.e("BookDescription", BookDescription);
+
                                 }else{
                                     BookDescription =volumeInfo.optString("description") ;
-                                    Log.e("BookDescription", BookDescription);
+
                                 }
-
-
-
 
                                 if( volumeInfo.optJSONArray("industryIdentifiers") == null){
                                     ISBNInfo = " Not Found";
-                                    Log.e("Author","ISBNInfo");
+
                                 }else{
                                     if(volumeInfo.optJSONArray("industryIdentifiers").length() == 1){
                                         JSONObject isbns0  = volumeInfo.optJSONArray("industryIdentifiers").getJSONObject(0);
                                         ISBNInfo = isbns0.getString("type") + ":" + isbns0.getString("identifier");
-                                        Log.e("Author",ISBNInfo) ;
+
                                     }else {
                                         JSONObject isbns0  = volumeInfo.optJSONArray("industryIdentifiers").getJSONObject(0);
                                         JSONObject isbns1  = volumeInfo.optJSONArray("industryIdentifiers").getJSONObject(1);
                                         ISBNInfo = isbns0.getString("type") + ":" + isbns0.getString("identifier") +"\n"+ isbns1.getString("type") + ":" + isbns1.getString("identifier") ;
-                                        Log.e("Author",ISBNInfo) ;
-                                        Log.e("Author", Author);
                                     }
                                 }
 
                                 int PageCount = volumeInfo.optInt("pageCount");
                                 if(PageCount == 0){
                                      Page = "Undefine pages";
-                                    Log.e("PageCount", "Undefine pages " );
                                 }else{
-                                    Log.e("PageCount", PageCount +" pages " );
+
                                      Page =PageCount +" pages ";
                                 }
 
+
+
                                 JSONObject imageLinks = volumeInfo.optJSONObject("imageLinks");
                                 if (imageLinks == null) {
-                                    Log.e("imageLinks", "not Found");
+
                                      smallThumbnail = "Not Found";
                                 } else {
                                     if(imageLinks.optString("smallThumbnail") == ""){
-                                        Log.e("smallThumbnail","not Found" );
+
                                          smallThumbnail = "Not Found";
                                     }else{
-                                        Log.e("smallThumbnail", imageLinks.optString("smallThumbnail") );
+
                                          smallThumbnail = imageLinks.optString("smallThumbnail");
                                     }
                                 }
 
                                 if(volumeInfo.optString("previewLink") == ""){
-                                    Log.e("PreviewLink", "Undefine pages " );
+
                                      PreviewLink = "Undefine pages ";
                                 }else{
-                                    Log.e("PreviewLink",volumeInfo.optString("previewLink"));
                                      PreviewLink = volumeInfo.getString("previewLink");
                                 }
                                 Book B = new Book();

@@ -60,6 +60,7 @@ public class TakeInformationForm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         //storage access
         storagePermission();
         //used for hide status bar
@@ -173,7 +174,7 @@ public class TakeInformationForm extends AppCompatActivity {
                             break;
                         default:
                             startActivity(new Intent(TakeInformationForm.this,
-                                    NotFound.class));
+                                    BookDetail.class));
                             finish();
                     }
                 }

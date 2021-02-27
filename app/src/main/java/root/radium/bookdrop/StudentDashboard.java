@@ -26,6 +26,7 @@ import root.radium.bookdrop.SupportingClass.Users;
 
 public class StudentDashboard extends AppCompatActivity {
 
+
     static ImageView SsetImg;
     DatabaseReference databaseReference;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -44,6 +45,7 @@ public class StudentDashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_dashboard);
+        getSupportActionBar().hide();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
         SsetImg = findViewById(R.id.Ssetimg);
