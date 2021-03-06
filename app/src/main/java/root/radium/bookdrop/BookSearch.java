@@ -37,12 +37,15 @@ public class BookSearch extends AppCompatActivity {
     public String Title ,SubTitle,Author,PublishDate, BookDescription,ISBNInfo,Page,smallThumbnail,PreviewLink;
     EditText searchText;
 
+    String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
         setContentView(R.layout.book_search);
+
         searchText =findViewById(R.id.searchText);
         recyclerView =findViewById(R.id.BookRecView);
         books = new ArrayList<>();
@@ -58,10 +61,7 @@ public class BookSearch extends AppCompatActivity {
 
             }
         });
-
-
     }
-
 
     private void getDataFromApi(String query) {
 
@@ -174,12 +174,12 @@ public class BookSearch extends AppCompatActivity {
                                 B.setPublishedDate(PublishDate);
                                 B.setThumbnail(smallThumbnail);
                                 B.setPreview(PreviewLink);
+
                                  books.add(B);
 
-
                             }
-                            recyclerView.setLayoutManager(new LinearLayoutManager(BookSearch.this));
                             bookAdapter = new BookAdapter(BookSearch.this,books);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(BookSearch.this));
                             recyclerView.setAdapter(bookAdapter);
 
 
@@ -190,14 +190,24 @@ public class BookSearch extends AppCompatActivity {
                         }
 
 
-                    }
 
+
+                    }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(BookSearch.this, "Error! Restart your app", Toast.LENGTH_SHORT).show();
 
             }
+
         });
         queue.add(jsonObjReq);
+
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
     }
 }

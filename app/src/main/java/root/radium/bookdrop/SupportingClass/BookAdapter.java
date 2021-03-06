@@ -24,15 +24,14 @@ import root.radium.bookdrop.R;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
-    LayoutInflater layoutInflater;
+
     List<Book> book ;
     private Context mContext;
 
     public BookAdapter(Context context, List<Book> book) {
-      //  this.layoutInflater = LayoutInflater.from(context);
+
         this.book = book;
         this.mContext = context;
-
 
     }
 
@@ -48,18 +47,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         viewHolder.containe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                **Send Position Wise Data In Other Activity with Object**
                 Intent i = new Intent(mContext , BookDetail.class);
                 int pos = viewHolder.getAdapterPosition();
-                i.putExtra("book_title" ,book.get(pos).getTitle());
-                i.putExtra("book_author" ,book.get(pos).getAuthors());
-                i.putExtra("book_desc" ,book.get(pos).getBookDescription());
-                i.putExtra("book_subTitle" ,book.get(pos).getBookSubTitle());
-                i.putExtra("book_publish_date" ,book.get(pos).getPublishedDate());
-                i.putExtra("book_preview" ,book.get(pos).getPreview());
-                i.putExtra("book_thumbnail" ,book.get(pos).getThumbnail());
-                i.putExtra("book_ISBN" ,book.get(pos).getISBN());
-
+                Book b = book.get(pos);
+                i.putExtra("BookDetail" ,b);
                 mContext.startActivity(i);
+
             }
         });
 
@@ -69,7 +63,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.BookTitle.setText(book.get(position).getTitle());
-      //  holder.BookSubtitle.setText(book.get(position).getBookSubTitle());
+       // holder.BookSubtitle.setText(book.get(position).getBookSubTitle());
         holder.BookAuthor.setText(book.get(position).getAuthors());
         holder.BookPages.setText(book.get(position).getPageCount());
         holder.BookPublishDate.setText(book.get(position).getPublishedDate());
@@ -95,7 +89,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             BookPages= itemView.findViewById(R.id.Book_pages);
             BookPublishDate= itemView.findViewById(R.id.Book_PublishDate);
             BookThumbnail = itemView.findViewById(R.id.Book_Thumbnail);
-         //   BookISBN = itemView.findViewById(R.id.Book_ISBN);
+            //BookISBN = itemView.findViewById(R.id.Book_ISBN);
             containe = itemView.findViewById(R.id.container);
 
         }

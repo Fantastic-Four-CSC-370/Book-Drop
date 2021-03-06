@@ -3,13 +3,10 @@ package root.radium.bookdrop;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +20,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import code.fortomorrow.easysharedpref.EasySharedPref;
+import root.radium.bookdrop.SupportingClass.LSData;
 import root.radium.bookdrop.SupportingClass.Users;
 
 public class LoginActivity extends AppCompatActivity {
@@ -35,8 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText mid, mpass;
     TextView mcreatenew;
     private FirebaseAuth auth;
-    private RadioGroup degSelectorGroup;
-    private RadioButton degSelectorBtn;
 
 
 
@@ -53,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         mid = findViewById(R.id.sid);
         mpass = findViewById(R.id.spass);
         mcreatenew = findViewById(R.id.createnew);
-
 
 
         lbtn.setOnClickListener(new View.OnClickListener() {
@@ -129,22 +127,22 @@ public class LoginActivity extends AppCompatActivity {
 
                 Toast.makeText(LoginActivity.this, s.getRole(), Toast.LENGTH_SHORT).show();
                 switch(s.getRole()){
-
                     case "TEACHER":
                         startActivity(new Intent(LoginActivity.this, TeacherDashboard.class));
-
                         break;
                     case "STUDENT":
-                        startActivity(new Intent(LoginActivity.this, StudentDashboard.class));
-
+                         startActivity(new Intent(LoginActivity.this, StudentDashboard.class));
                         break;
                     case "LIBRARIAN":
-                        startActivity(new Intent(LoginActivity.this, LibrarianDashboard.class));
-
+                      startActivity ( new Intent(LoginActivity.this, LibrarianDashboard.class));
                         break;
                     default:
-
                 }
+
+
+                EasySharedPref.write("TestSp",uid);
+
+
             }
         }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -154,4 +152,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        EasySharedPref.init(this);
+        super.onStart();
+    }
 }

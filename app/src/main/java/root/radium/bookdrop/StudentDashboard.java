@@ -2,6 +2,7 @@ package root.radium.bookdrop;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,13 +16,17 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import root.radium.bookdrop.SupportingClass.LSData;
 import root.radium.bookdrop.SupportingClass.Users;
 
 public class StudentDashboard extends AppCompatActivity {
@@ -29,23 +34,21 @@ public class StudentDashboard extends AppCompatActivity {
 
     static ImageView SsetImg;
     DatabaseReference databaseReference;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid = user.getUid();
+
     TextView Ssetname, Ssetid, SsetDepartment, SsetPhoneNo ,setRole;
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    DocumentReference documentReference = firebaseFirestore.collection("User").document(uid);
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String uid = user.getUid();
 
-
-//    private void ShowImg(String img) {
-//       Picasso.with(this).load(img).into(SsetImg);
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_dashboard);
         getSupportActionBar().hide();
+
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = firebaseFirestore.collection("User").document(uid);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
         SsetImg = findViewById(R.id.Ssetimg);
@@ -55,22 +58,7 @@ public class StudentDashboard extends AppCompatActivity {
         SsetPhoneNo = findViewById(R.id.setMobilename);
         setRole = findViewById(R.id.setRole);
 
-//        databaseReference.child(uid).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                student user = dataSnapshot.getValue(student.class);
-//                Ssetname.setText("Name : " + user.getName());
-//                SsetPhoneNo.setText("Mobile no : " + user.getMobileNo());
-//                SsetDepartment.setText("Semester : " + user.getDepartment());
-//                Ssetid.setText("ID : " + user.getId());
-//                String img = user.getImg();
-//                ShowImg(img);
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                Log.w("StudentDashboard", "not working");
-//            }
-//        });
+
 
         documentReference.get().addOnFailureListener(new OnFailureListener() {
             @Override
@@ -100,23 +88,31 @@ public class StudentDashboard extends AppCompatActivity {
         });
 
 
-        findViewById(R.id.SignOut).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(StudentDashboard.this , LoginActivity.class));
-                finish();
-            }
-        });
+
         findViewById(R.id.ShowBooks).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(StudentDashboard.this , BookSearch.class));
                 finish();
             }
         });
 
+        findViewById(R.id.SignOut).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(StudentDashboard.this , LoginActivity.class));
+                finish();
+
+            }
+        });
+
     }
 
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+    }
 }

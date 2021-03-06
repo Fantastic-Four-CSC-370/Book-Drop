@@ -41,17 +41,21 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
+import code.fortomorrow.easysharedpref.EasySharedPref;
+import root.radium.bookdrop.SupportingClass.LSData;
 import root.radium.bookdrop.SupportingClass.Users;
 
-public class TakeInformationForm extends AppCompatActivity {
+public class TakeInformationForm extends AppCompatActivity  {
     private static final int IMAGE_REQUEST = 1;
     ImageView mSselectedPic;
     EditText mSName, mSid, msPhoneNo, mSDepartment;
     Uri imageUri;
     private RadioGroup roleSelectorGroup;
     private RadioButton roleSelectorBtn;
+
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String uid = user.getUid();
+
     //    firebase
     DatabaseReference databaseReference;
     StorageReference storageReference;
@@ -61,6 +65,9 @@ public class TakeInformationForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+
+        EasySharedPref.write("TestSp",uid);
+
         //storage access
         storagePermission();
         //used for hide status bar
@@ -111,6 +118,7 @@ public class TakeInformationForm extends AppCompatActivity {
         int selectedId = roleSelectorGroup.getCheckedRadioButtonId();
         roleSelectorBtn = findViewById(selectedId);
         String role =  roleSelectorBtn.getText().toString().toUpperCase().trim();
+
         try {
 
             String[] filePath = {MediaStore.Images.Media.DATA};
@@ -134,16 +142,15 @@ public class TakeInformationForm extends AppCompatActivity {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                    // ...
+
                     Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                     while(! uriTask.isSuccessful());
                         Uri downloadUrl = uriTask.getResult();
 
                     Users s = new Users(name, phoneNo, id, department, downloadUrl.toString(),role);
-//realtime database
-//                    databaseReference.child(uid).setValue(s);
-                    firebaseFirestore.collection("User").document(uid).set(s).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                    firebaseFirestore.collection("User").document(uid).set(s).
+                            addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(TakeInformationForm.this, "firestore ok", Toast.LENGTH_SHORT).show();
@@ -156,21 +163,13 @@ public class TakeInformationForm extends AppCompatActivity {
                     switch(role){
 
                         case "TEACHER":
-                            startActivity(new Intent(TakeInformationForm.this,
-                                    TeacherDashboard.class));
-                            finish();
-
+                            startActivity(new Intent(TakeInformationForm.this, TeacherDashboard.class));
                             break;
                         case "STUDENT":
-                            startActivity(new Intent(TakeInformationForm.this,
-                                    StudentDashboard.class));
-                            finish();
-
+                            startActivity(new Intent(TakeInformationForm.this, StudentDashboard.class));
                             break;
                         case "LIBRARIAN":
-                            startActivity(new Intent(TakeInformationForm.this,
-                                    LibrarianDashboard.class));
-                            finish();
+                            startActivity ( new Intent(TakeInformationForm.this, LibrarianDashboard.class));
                             break;
                         default:
                             startActivity(new Intent(TakeInformationForm.this,
