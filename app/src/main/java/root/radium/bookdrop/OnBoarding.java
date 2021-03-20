@@ -1,12 +1,10 @@
 package root.radium.bookdrop;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,8 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
+
+import root.radium.bookdrop.Adapters.SliderAdapter;
 
 public class OnBoarding extends AppCompatActivity {
 

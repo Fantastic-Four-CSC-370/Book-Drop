@@ -3,12 +3,19 @@ package root.radium.bookdrop.SupportingClass;
 import java.io.Serializable;
 
 public class Book implements Serializable {
-    private String Title,Authors,PublishedDate,BookDescription,BookSubTitle,Thumbnail,Preview,ISBN, pageCount ;
+
+    private String ID, Title,Authors,PublishedDate,BookDescription,BookSubTitle,Thumbnail,Preview,ISBN, pageCount ;
 
     public Book(){
 
     }
+    public String getID() {
+        return ID;
+    }
 
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 
     public String getTitle() {
         return Title;
@@ -82,7 +89,7 @@ public class Book implements Serializable {
         this.pageCount = pageCount;
     }
 
-    public Book(String Title, String Authors, String PublishedDate, String BookDescription, String BookSubTitle,
+    public Book(String ID ,String Title, String Authors, String PublishedDate, String BookDescription, String BookSubTitle,
                 String Thumbnail, String Preview , String pageCount , String ISBN) {
         this.Title = Title;
         this.Authors = Authors;
@@ -93,6 +100,7 @@ public class Book implements Serializable {
         this.Preview = Preview;
         this.pageCount = pageCount;
         this.ISBN = ISBN;
+        this.ID = ID;
 
     }
 

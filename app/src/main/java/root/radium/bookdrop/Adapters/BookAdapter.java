@@ -1,25 +1,29 @@
 
 
-package root.radium.bookdrop.SupportingClass;
+package root.radium.bookdrop.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.android.volley.Response;
+
 import com.squareup.picasso.Picasso;
-import org.json.JSONObject;
+
 import java.util.List;
 
 import root.radium.bookdrop.BookDetail;
+import root.radium.bookdrop.BorrowRequestPage;
 import root.radium.bookdrop.R;
+import root.radium.bookdrop.SupportingClass.Book;
+import root.radium.bookdrop.SupportingClass.BorrowDetails;
 
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
@@ -34,6 +38,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         this.mContext = context;
 
     }
+
 
     @NonNull
     @Override
@@ -69,6 +74,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         holder.BookPublishDate.setText(book.get(position).getPublishedDate());
        // holder.BookISBN.setText(book.get(position).getISBN());
         Picasso.get().load(book.get(position).getThumbnail()).into(holder.BookThumbnail);
+
+//        Log.e("thumbnail",  book.get(position).getPublishedDate() );
+//        Log.e("thumbnail",  book.size() +"" );
 
     }
     @Override

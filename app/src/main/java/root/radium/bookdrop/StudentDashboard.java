@@ -108,6 +108,14 @@ public class StudentDashboard extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.ShowBorrowBooks).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StudentDashboard.this, BorrowRequestPage.class));
+
+            }
+        });
+
     }
 
     @Override

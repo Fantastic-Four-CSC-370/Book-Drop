@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -26,15 +25,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import root.radium.bookdrop.SupportingClass.Book;
-import root.radium.bookdrop.SupportingClass.BookAdapter;
+import root.radium.bookdrop.Adapters.BookAdapter;
 
-public class BookSearch extends AppCompatActivity {
+public class  BookSearch extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Book> books;
     BookAdapter bookAdapter;
     private String API_KEY = "&key=AIzaSyDtnPYZJxLuF-NI-VW_pUU_rdAXvBthWWc";
     private String API_URL = "https://www.googleapis.com/books/v1/volumes?q=";
-    public String Title ,SubTitle,Author,PublishDate, BookDescription,ISBNInfo,Page,smallThumbnail,PreviewLink;
+    public String ID,Title ,SubTitle,Author,PublishDate, BookDescription,ISBNInfo,Page,smallThumbnail,PreviewLink;
     EditText searchText;
 
     String uid;
@@ -78,6 +77,8 @@ public class BookSearch extends AppCompatActivity {
                             JSONArray items = response.getJSONArray("items");
                             for (int i =0 ; i<items.length() ; i++ ){
                                 JSONObject item =items.getJSONObject(i);
+                                ID = item.getString("id");
+                             //   Log.e("ID" ,ID);
                                 JSONObject volumeInfo = item.optJSONObject("volumeInfo");
 
                                 Title =volumeInfo.getString("title");
@@ -165,6 +166,7 @@ public class BookSearch extends AppCompatActivity {
                                      PreviewLink = volumeInfo.getString("previewLink");
                                 }
                                 Book B = new Book();
+                                B.setID(ID);
                                 B.setTitle(Title);
                                 B.setAuthors(Author);
                                 B.setBookDescription(BookDescription);
@@ -188,9 +190,6 @@ public class BookSearch extends AppCompatActivity {
                             e.printStackTrace();
                             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                         }
-
-
-
 
                     }
                 }, new Response.ErrorListener() {

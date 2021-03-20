@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import code.fortomorrow.easysharedpref.EasySharedPref;
 import root.radium.bookdrop.SupportingClass.Book;
+import root.radium.bookdrop.SupportingClass.BorrowDetails;
 import root.radium.bookdrop.SupportingClass.LSData;
 
 public class BookDetail extends AppCompatActivity {
@@ -39,10 +40,10 @@ public class BookDetail extends AppCompatActivity {
     private static final String CHANNEL_NAME = "SHUVO TEST";
     private static final String CHANNEL_DES = "SHUVO TEST";
 
-    FirebaseFirestore firebaseFirestore;
+     FirebaseFirestore firebaseFirestore;
      String uid;
 
-    String title
+    String ID ,title
             , authors, description, publishDate
             ,ISBN ,preview,thumbnail ,subTitile ;
 
@@ -51,7 +52,7 @@ public class BookDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_detail);
         uid = EasySharedPref.read("TestSp","");
-        
+
 //                for Notification
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,CHANNEL_ID,
@@ -76,6 +77,7 @@ public class BookDetail extends AppCompatActivity {
             preview = B.getPreview();
             subTitile = B.getBookSubTitle();
             ISBN = B.getISBN();
+            ID =B.getID();
 
         };
 
@@ -98,28 +100,21 @@ public class BookDetail extends AppCompatActivity {
         tvSubTitle.setText(subTitile);
         tvISBN.setText(ISBN);
 
+      //  Toast.makeText(this, ID, Toast.LENGTH_SHORT).show();
+
 
 
         findViewById(R.id.borrowThisBook).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(BookDetail.this, "Borrowing "  , Toast.LENGTH_SHORT).show();
-                firebaseFirestore =FirebaseFirestore.getInstance();
+                FirebaseDatabase DB = FirebaseDatabase.getInstance();
 
-                firebaseFirestore.collection("Borrow Status")
-                        .document(uid).set(B).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(BookDetail.this, "Fail", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(BookDetail.this, "Success", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                BorrowDetails borrowDetails = new BorrowDetails(ID,getCurrentTime(),thumbnail);
+                DatabaseReference BorrowStatus = DB.getReference("Borrow Status").child(uid).push();
+                BorrowStatus.setValue(borrowDetails);
+                getNotification();
 
-               getNotification();
             }
         });
 
@@ -137,12 +132,18 @@ public class BookDetail extends AppCompatActivity {
         Glide.with(this).load(thumbnail).into(ivThumbnail);
     }
 
+    private Long getCurrentTime() {
+
+        return System.currentTimeMillis()/1000;
+
+    }
+
     public void getNotification(){
         NotificationCompat.Builder mNotification =
                 new NotificationCompat.Builder(this,CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(title)
-                .setContentText("hello world")
+                .setContentTitle("You have make a borrow request")
+                .setContentText(title)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat mNotificationManager = NotificationManagerCompat.from(this);
@@ -153,8 +154,6 @@ public class BookDetail extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-
-
         super.onStart();
     }
 }
