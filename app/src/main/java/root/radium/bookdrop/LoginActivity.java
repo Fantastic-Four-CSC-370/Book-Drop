@@ -20,15 +20,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import code.fortomorrow.easysharedpref.EasySharedPref;
-import root.radium.bookdrop.SupportingClass.LSData;
 import root.radium.bookdrop.SupportingClass.Users;
+import root.radium.bookdrop.librarian.LibrarianDashboard;
+import root.radium.bookdrop.student.StudentDashboard;
+import root.radium.bookdrop.teacher.TeacherDashboard;
 
 public class LoginActivity extends AppCompatActivity {
     final String TAG = "loginForm";

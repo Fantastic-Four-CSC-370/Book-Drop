@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -42,14 +43,17 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 
 import code.fortomorrow.easysharedpref.EasySharedPref;
-import root.radium.bookdrop.SupportingClass.LSData;
 import root.radium.bookdrop.SupportingClass.Users;
+import root.radium.bookdrop.librarian.LibrarianDashboard;
+import root.radium.bookdrop.student.StudentDashboard;
+import root.radium.bookdrop.teacher.TeacherDashboard;
 
 public class TakeInformationForm extends AppCompatActivity  {
     private static final int IMAGE_REQUEST = 1;
     ImageView mSselectedPic;
     EditText mSName, mSid, msPhoneNo, mSDepartment;
     Uri imageUri;
+    Button sSubmit;
     private RadioGroup roleSelectorGroup;
     private RadioButton roleSelectorBtn;
 
@@ -65,9 +69,7 @@ public class TakeInformationForm extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-
         EasySharedPref.write("TestSp",uid);
-
         //storage access
         storagePermission();
         //used for hide status bar
@@ -80,6 +82,9 @@ public class TakeInformationForm extends AppCompatActivity  {
         msPhoneNo = findViewById(R.id.stuPhone);
         mSDepartment = findViewById(R.id.stuDepart);
         roleSelectorGroup = findViewById(R.id.RloeSelector);
+        sSubmit = findViewById(R.id.sSubmit);
+        sSubmit.setEnabled(false);
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
         storageReference = FirebaseStorage.getInstance().getReference("User's Picture");
@@ -89,10 +94,13 @@ public class TakeInformationForm extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 openFileToSelectImg();
+                sSubmit.setEnabled(true);
             }
 
         });
-        findViewById(R.id.sSubmit).setOnClickListener(new View.OnClickListener() {
+
+
+        sSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     saveUserData();
@@ -186,15 +194,15 @@ public class TakeInformationForm extends AppCompatActivity  {
 
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-
             Glide.with(this).load(imageUri).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(mSselectedPic);
+
         }
+
 
     }
 

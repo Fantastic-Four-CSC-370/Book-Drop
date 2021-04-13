@@ -1,4 +1,4 @@
-package root.radium.bookdrop;
+package root.radium.bookdrop.librarian;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +22,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import root.radium.bookdrop.LoginActivity;
+import root.radium.bookdrop.R;
 import root.radium.bookdrop.SupportingClass.Users;
 
 public class LibrarianDashboard extends AppCompatActivity {

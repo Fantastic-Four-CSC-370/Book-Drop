@@ -1,8 +1,7 @@
-package root.radium.bookdrop;
+package root.radium.bookdrop.student;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,17 +15,17 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
-import root.radium.bookdrop.SupportingClass.LSData;
+import root.radium.bookdrop.BookSearch;
+import root.radium.bookdrop.BorrowRequestPage;
+import root.radium.bookdrop.LoginActivity;
+import root.radium.bookdrop.R;
 import root.radium.bookdrop.SupportingClass.Users;
 
 public class StudentDashboard extends AppCompatActivity {
@@ -93,7 +92,7 @@ public class StudentDashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(StudentDashboard.this , BookSearch.class));
-                finish();
+
             }
         });
 

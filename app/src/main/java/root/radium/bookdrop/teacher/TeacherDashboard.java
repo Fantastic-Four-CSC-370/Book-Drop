@@ -1,4 +1,4 @@
-package root.radium.bookdrop;
+package root.radium.bookdrop.teacher;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +22,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import root.radium.bookdrop.BookSearch;
+import root.radium.bookdrop.BorrowRequestPage;
+import root.radium.bookdrop.LoginActivity;
+import root.radium.bookdrop.R;
 import root.radium.bookdrop.SupportingClass.Users;
+import root.radium.bookdrop.student.StudentDashboard;
 
 public class TeacherDashboard extends AppCompatActivity {
 
@@ -70,6 +75,20 @@ public class TeacherDashboard extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
+            }
+        });
+
+        findViewById(R.id.tShowBooks).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TeacherDashboard.this , BookSearch.class));
+            }
+        });
+
+        findViewById(R.id.tShowBorrowBooks).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TeacherDashboard.this , BorrowRequestPage.class));
             }
         });
 

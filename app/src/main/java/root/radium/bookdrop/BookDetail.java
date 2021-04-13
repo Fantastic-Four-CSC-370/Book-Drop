@@ -21,12 +21,15 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.concurrent.TimeUnit;
 
 import code.fortomorrow.easysharedpref.EasySharedPref;
 import root.radium.bookdrop.SupportingClass.Book;
@@ -110,11 +113,15 @@ public class BookDetail extends AppCompatActivity {
                 Toast.makeText(BookDetail.this, "Borrowing "  , Toast.LENGTH_SHORT).show();
                 FirebaseDatabase DB = FirebaseDatabase.getInstance();
 
-                BorrowDetails borrowDetails = new BorrowDetails(ID,getCurrentTime(),thumbnail);
+                BorrowDetails borrowDetails = new BorrowDetails(ID,
+                        getCurrentTime(),
+                        thumbnail ,
+                        (System.currentTimeMillis() + TimeUnit.DAYS.toMillis(3))/1000);
+
                 DatabaseReference BorrowStatus = DB.getReference("Borrow Status").child(uid).push();
                 BorrowStatus.setValue(borrowDetails);
                 getNotification();
-
+                startActivity(new Intent(BookDetail.this,BorrowRequestPage.class));
             }
         });
 
@@ -142,7 +149,7 @@ public class BookDetail extends AppCompatActivity {
         NotificationCompat.Builder mNotification =
                 new NotificationCompat.Builder(this,CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("You have make a borrow request")
+                .setContentTitle("You have make a borrow request for 7 days")
                 .setContentText(title)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 

@@ -1,4 +1,4 @@
-package root.radium.bookdrop;
+ package root.radium.bookdrop;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,9 +47,7 @@ public class BorrowRequestPage extends AppCompatActivity {
         // Write a message to the database
         FirebaseDatabase DB = FirebaseDatabase.getInstance();
         DatabaseReference BorrowStatus = DB.getReference("Borrow Status").child(uid);
-
-
-
+        
         BorrowStatus.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -59,10 +57,8 @@ public class BorrowRequestPage extends AppCompatActivity {
                 borrowDetails.add(BorDet);
 
                 borrowBooksAdapter = new BorrowBooksAdapter(BorrowRequestPage.this,borrowDetails);
-               recyclerView.setLayoutManager(new LinearLayoutManager(BorrowRequestPage.this));
+                recyclerView.setLayoutManager(new LinearLayoutManager(BorrowRequestPage.this));
                 recyclerView.setAdapter(borrowBooksAdapter);
-
-
 
             }
 
