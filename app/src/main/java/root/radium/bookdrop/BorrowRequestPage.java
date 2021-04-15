@@ -88,44 +88,6 @@ public class BorrowRequestPage extends AppCompatActivity {
 
         });
 
-
-
-
-
-
-
-//                addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                int i = 0;
-//                for(DataSnapshot d : dataSnapshot.getChildren()) {
-//
-//
-//                    BorrowDetails BorDet = dataSnapshot.getValue(BorrowDetails.class);
-//
-//                    borrowDetails.add(BorDet);
-//                    Log.e("Test" , BorDet.getGBookID());
-//
-//
-//
-//                   Log.e("Test" , String.valueOf(d.getKey()));
-//
-//                    i++;}
-//                borrowBooksAdapter = new BorrowBooksAdapter(BorrowRequestPage.this,borrowDetails);
-//                recyclerView.setLayoutManager(new LinearLayoutManager(BorrowRequestPage.this));
-//                recyclerView.setAdapter(borrowBooksAdapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//              //  Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
-
-
-
     }
 
     @Override

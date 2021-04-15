@@ -63,6 +63,21 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/LseeAllRequest"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/agencyb"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="10dp"
+            android:text="All request"
+            android:textSize="20sp"
+            app:strokeColor="@color/primary" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/LSignOut"
             style="?attr/materialButtonOutlinedStyle"

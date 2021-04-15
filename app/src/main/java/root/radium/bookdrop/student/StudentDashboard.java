@@ -119,7 +119,6 @@ public class StudentDashboard extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-
         super.onStart();
     }
 }

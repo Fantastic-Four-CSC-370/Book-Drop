@@ -76,7 +76,36 @@ public class  BookSearch extends AppCompatActivity {
 
             }
         });
+
     }
+
+
+    //qr code scanner
+    public void scan(View view) {
+        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+        intentIntegrator.initiateScan();
+    }
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode, data);
+        Toast.makeText(BookSearch.this, intentResult.getContents(), Toast.LENGTH_SHORT).show();
+
+        getDataFromApi(intentResult.getContents().toString());
+
+        searchText.setText(intentResult.getContents().toString());
+
+//        if(intentResult != null){
+//            if (intentResult.getContents() == null){
+//                textView.setText("Cancelled");
+//            }
+//            else {
+//                textView.setText((intentResult.getContents()));
+//            }
+//        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 
     private void getDataFromApi(String query) {
 
@@ -225,25 +254,5 @@ public class  BookSearch extends AppCompatActivity {
 
         super.onStart();
     }
-//qr code scanner
-    public void scan(View view) {
-        IntentIntegrator intentIntegrator = new IntentIntegrator(this);
-        intentIntegrator.initiateScan();
-    }
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode, data);
-        Toast.makeText(BookSearch.this, intentResult.getContents(), Toast.LENGTH_SHORT).show();
-
-//        if(intentResult != null){
-//            if (intentResult.getContents() == null){
-//                textView.setText("Cancelled");
-//            }
-//            else {
-//                textView.setText((intentResult.getContents()));
-//            }
-//        }
-
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 }

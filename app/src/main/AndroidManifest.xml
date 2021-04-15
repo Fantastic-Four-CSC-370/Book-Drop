@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="root.radium.bookdrop">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -19,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookDrop"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BorrowRequestPage" />
+        <activity android:name=".BorrowRequestPage"></activity>
         <activity android:name=".BookDetail" />
         <activity android:name=".librarian.LibrarianDashboard" />
         <activity android:name=".teacher.TeacherDashboard" />

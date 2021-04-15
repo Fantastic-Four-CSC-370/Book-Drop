@@ -38,7 +38,6 @@ import root.radium.bookdrop.SupportingClass.LSData;
 
 public class BookDetail extends AppCompatActivity {
 
-
     private static final String CHANNEL_ID = "SHUVO TEST";
     private static final String CHANNEL_NAME = "SHUVO TEST";
     private static final String CHANNEL_DES = "SHUVO TEST";
