@@ -28,6 +28,19 @@
         android:text="search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/scanButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/btnsrc"
+        android:layout_below="@id/searchBook"
+        android:layout_marginStart="10dp"
+        android:onClick="scan"
+        app:icon="@drawable/ic_qr_scanner"
+        android:text="scan"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/BookRecView"

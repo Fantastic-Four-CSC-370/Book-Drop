@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookDrop"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BorrowRequestPage"></activity>
+        <activity android:name=".qrCodeScanner"/>
+        <activity android:name=".BorrowRequestPage" />
         <activity android:name=".BookDetail" />
         <activity android:name=".librarian.LibrarianDashboard" />
         <activity android:name=".teacher.TeacherDashboard" />
