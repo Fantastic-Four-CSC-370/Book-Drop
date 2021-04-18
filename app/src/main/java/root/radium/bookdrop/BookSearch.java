@@ -94,15 +94,6 @@ public class  BookSearch extends AppCompatActivity {
 
         searchText.setText(intentResult.getContents().toString());
 
-//        if(intentResult != null){
-//            if (intentResult.getContents() == null){
-//                textView.setText("Cancelled");
-//            }
-//            else {
-//                textView.setText((intentResult.getContents()));
-//            }
-//        }
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 

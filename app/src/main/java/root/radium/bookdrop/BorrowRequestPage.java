@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Adapter;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +42,18 @@ public class BorrowRequestPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrow_request_page);
         getSupportActionBar().hide();
-        uid = EasySharedPref.read("TestSp","");
+
+        Intent i =getIntent();
+
+        Bundle extras = i.getExtras();
+        if(extras != null){
+           uid = extras.getString("UID");
+        }
+        else {
+            uid = EasySharedPref.read("TestSp","");
+        }
+
+        Toast.makeText(this, uid , Toast.LENGTH_SHORT).show();
 
         recyclerView = findViewById(R.id.BorrowBookRec);
         borrowDetails = new ArrayList<>();

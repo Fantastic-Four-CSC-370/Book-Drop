@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import root.radium.bookdrop.R;
@@ -43,14 +46,13 @@ public class UserListAdapter extends ArrayAdapter<Users> {
 
 
 
-//        name.setText(user.getName());
-//        semester.setText("Semester : " + user.getSemester());
-//        chr.setText("Credit Hour "+user.getCreditHour());
-//        fee.setText("Fee "+user.getSemesterfee());
-//
-//       Log.e(TAG,user.getName());
+        Name.setText("Name :" + user.getName());
+        ID.setText("ID " + user.getId());
+        role.setText(user.getRole());
+        Picasso.get().load(user.getImg()).into(Picture);
 
-
+//        Glide.with(context).load(user.getImg()).into(Picture);
+        Log.e("TAG", user.getName());
 
         return view;
     }

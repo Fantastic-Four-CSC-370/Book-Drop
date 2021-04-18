@@ -1,7 +1,7 @@
 package root.radium.bookdrop.SupportingClass;
 
 public class Users {
-    String name, mobileNo, id, department, img, role;
+    String name, mobileNo, id, department, img, role ,UID;
 
     public Users() {
 
@@ -14,6 +14,11 @@ public class Users {
         this.department = department;
         this.img = img;
         this.role = role;
+
+    }
+    public Users(String UID) {
+       this.UID = UID;
+
     }
 
     public String getName() {
@@ -59,5 +64,9 @@ public class Users {
     public String getRole() { return role; }
 
     public void setRole(String role) { this.role = role; }
+
+    public String getUID() { return UID; }
+
+    public void setUID(String UID) { this.UID = UID; }
 
 }

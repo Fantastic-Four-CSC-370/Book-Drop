@@ -18,7 +18,8 @@
         android:theme="@style/Theme.BookDrop"
         android:usesCleartextTraffic="true">
         <activity android:name=".BorrowRequestPage"></activity>
-        <activity android:name=".BookDetail" />
+        <activity android:name=".BookDetail"/>
+        <activity android:name=".requestUserList"/>
         <activity android:name=".librarian.LibrarianDashboard" />
         <activity android:name=".teacher.TeacherDashboard" />
         <activity android:name=".student.StudentDashboard" />

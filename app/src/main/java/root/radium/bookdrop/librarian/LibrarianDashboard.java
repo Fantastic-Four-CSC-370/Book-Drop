@@ -43,6 +43,7 @@ import root.radium.bookdrop.LoginActivity;
 import root.radium.bookdrop.R;
 import root.radium.bookdrop.SupportingClass.BorrowDetails;
 import root.radium.bookdrop.SupportingClass.Users;
+import root.radium.bookdrop.requestUserList;
 
 public class LibrarianDashboard extends AppCompatActivity {
     static ImageView LsetImg;
@@ -52,7 +53,6 @@ public class LibrarianDashboard extends AppCompatActivity {
     TextView Lsetname, Lsetid, LsetDepartment, LsetPhoneNo;
     Button LibSeeAll ;
     private List<Users> userDataList = new ArrayList<>();
-    private UserListAdapter UlistAdapter ;
 
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -72,7 +72,7 @@ public class LibrarianDashboard extends AppCompatActivity {
         LsetPhoneNo = findViewById(R.id.LsetMobilename);
         LibSeeAll = findViewById(R.id.LseeAllRequest);
 
-        UlistAdapter = new UserListAdapter(LibrarianDashboard.this, userDataList );
+
 
         documentReference.get().addOnFailureListener(new OnFailureListener() {
             @Override
@@ -86,7 +86,7 @@ public class LibrarianDashboard extends AppCompatActivity {
 
                 Lsetname.setText("Name : " + s.getName());
                 LsetPhoneNo.setText("Mobile no : " + s.getMobileNo());
-                LsetDepartment.setText("Semester : " + s.getDepartment().toUpperCase());
+                LsetDepartment.setText("Department : " + s.getDepartment().toUpperCase());
                 Lsetid.setText("ID : " + s.getId());
                 String img = s.getImg();
                 Picasso.get().load(img).into(LsetImg);
@@ -102,7 +102,8 @@ public class LibrarianDashboard extends AppCompatActivity {
         LibSeeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                seeAllRequest();
+
+                startActivity(new Intent(LibrarianDashboard.this , requestUserList.class));
             }
         });
 
@@ -114,54 +115,6 @@ public class LibrarianDashboard extends AppCompatActivity {
                 startActivity(new Intent(LibrarianDashboard.this , LoginActivity.class));
                 finish();
 
-            }
-        });
-
-    }
-
-    private void seeAllRequest() {
-        List<String> list = new ArrayList<String>();
-        FirebaseDatabase DB = FirebaseDatabase.getInstance();
-        DatabaseReference BorrowStatus = DB.getReference("Borrow Status");
-        BorrowStatus.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                Log.d("Children count", String.valueOf(snapshot.getChildrenCount()));
-                for(DataSnapshot data : snapshot.getChildren()){
-                    Log.d( "onDataChange: " , data.getKey());
-                    list.add(data.getKey());
-                }
-                userDataList.clear();
-                for(String user:list){
-                    Log.d("fruits: ", user );
-                    DocumentReference alludocumentReference = firebaseFirestore.collection("User").document(user);
-                    alludocumentReference.get().addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            Users s = documentSnapshot.toObject(Users.class);
-                            Log.d( "onSuccess: ", s.getName());
-                            userDataList.add(s);
-
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
-                        }
-                    });
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(LibrarianDashboard.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
 
