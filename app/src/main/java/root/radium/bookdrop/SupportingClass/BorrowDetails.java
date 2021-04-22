@@ -5,12 +5,11 @@ package root.radium.bookdrop.SupportingClass;
 public class BorrowDetails {
 
     String GBookID;
-    String borrowBookThumbnail ;
+    String borrowBookThumbnail;
+    String documentKey;
     Long TimeStamp;
-
-
-
     Long returnTime;
+
 
     public BorrowDetails() {
 
@@ -21,6 +20,9 @@ public class BorrowDetails {
         this.TimeStamp = timeStamp;
         this.borrowBookThumbnail = borrowBookThumbnail;
         this.returnTime = returnTime;
+    }
+    public BorrowDetails(String documentKey) {
+        this.documentKey = documentKey;
     }
 
     public String getGBookID() {
@@ -52,6 +54,14 @@ public class BorrowDetails {
 
     public void setReturnTime(Long returnTime) {
         this.returnTime = returnTime;
+    }
+
+    public String getDocumentKey() {
+        return documentKey;
+    }
+
+    public void setDocumentKey(String documentKey) {
+        this.documentKey = documentKey;
     }
 
 

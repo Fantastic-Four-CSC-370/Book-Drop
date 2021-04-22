@@ -139,9 +139,8 @@ public class LoginActivity extends AppCompatActivity {
                     default:
                 }
 
-
                 EasySharedPref.write("TestSp",uid);
-
+                EasySharedPref.write("Role" , s.getRole());
 
             }
         }).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

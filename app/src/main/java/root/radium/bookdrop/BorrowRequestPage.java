@@ -44,7 +44,6 @@ public class BorrowRequestPage extends AppCompatActivity {
         getSupportActionBar().hide();
 
         Intent i =getIntent();
-
         Bundle extras = i.getExtras();
         if(extras != null){
            uid = extras.getString("UID");
@@ -66,7 +65,8 @@ public class BorrowRequestPage extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                 BorrowDetails BorDet = snapshot.getValue(BorrowDetails.class);
-                Log.e("TAG", BorDet.getGBookID() );
+                BorDet.setDocumentKey(snapshot.getKey());
+                Log.e("TAG", snapshot.getKey());
                 borrowDetails.add(BorDet);
 
                 borrowBooksAdapter = new BorrowBooksAdapter(BorrowRequestPage.this,borrowDetails);

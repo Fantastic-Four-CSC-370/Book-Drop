@@ -115,7 +115,7 @@ public class BookDetail extends AppCompatActivity {
                 BorrowDetails borrowDetails = new BorrowDetails(ID,
                         getCurrentTime(),
                         thumbnail ,
-                        (System.currentTimeMillis() + TimeUnit.DAYS.toMillis(3))/1000);
+                        (System.currentTimeMillis() + TimeUnit.DAYS.toMillis(7))/1000);
 
                 DatabaseReference BorrowStatus = DB.getReference("Borrow Status").child(uid).push();
                 BorrowStatus.setValue(borrowDetails);

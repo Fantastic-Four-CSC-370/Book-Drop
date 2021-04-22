@@ -75,7 +75,9 @@ public class requestUserList extends AppCompatActivity {
                     }).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
+
                             Users s = documentSnapshot.toObject(Users.class);
+
                             Log.e( "onSuccess: ", s.getName());
                             s.setUID(user);
                             userDataList.add(s);
@@ -85,7 +87,6 @@ public class requestUserList extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             reqlist.setAdapter(UlistAdapter);
-
                         }
                     });
                 }
@@ -106,6 +107,7 @@ public class requestUserList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 
     }
